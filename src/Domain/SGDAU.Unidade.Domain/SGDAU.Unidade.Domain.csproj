@@ -16,6 +16,10 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\InfraStructure\SGDAU.Common\SGDAU.Common.csproj" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="$(SolutionDir)..\..\tools\nuget\Nuget.exe push $(ProjectDir)bin\Release\*.nupkg -Source http://pm.ironmountain.com.br/api/v2/package" />
   </Target>

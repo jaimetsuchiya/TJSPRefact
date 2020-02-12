@@ -6,6 +6,8 @@ using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SGDAU.Advogado.Domain;
+using SGDAU.Common;
 using SGDAU.Unidade.Domain;
 using TJSPApi.DTOs;
 
@@ -16,7 +18,22 @@ namespace TJSPApi.Controllers
     public class GraphQLController : ControllerBase
     {
         private readonly IUnidadeService _unidadeService;
-        public GraphQLController(IUnidadeService unidadeService) => _unidadeService = unidadeService;
+        private readonly IAdvogadoService _advogadoService;
+
+        public GraphQLController(IUnidadeService unidadeService, 
+                                 IAdvogadoService advogadoService)
+        {
+            _unidadeService = unidadeService;
+            _advogadoService = advogadoService;
+        }
+
+        private QuerySchema CreateSchema()
+        {
+            var querySchema = new QuerySchema();
+            new AdvogadoQuery(this._advogadoService).SetQueries(querySchema);
+            new UnidadeQuery(this._unidadeService).SetQueries(querySchema);
+            return querySchema;
+        }
 
         public async Task<IActionResult> Post([FromBody] GraphQLQuery query)
         {
@@ -24,7 +41,7 @@ namespace TJSPApi.Controllers
 
             var schema = new Schema
             {
-                Query = new UnidadeQuery(_unidadeService)
+                Query = CreateSchema()
             };
 
             var result = await new DocumentExecuter().ExecuteAsync(_ =>
@@ -43,5 +60,11 @@ namespace TJSPApi.Controllers
             return Ok(result);
         }
 
+
+    }
+
+    public class QuerySchema : ObjectGraphType 
+    {
+        
     }
 }
