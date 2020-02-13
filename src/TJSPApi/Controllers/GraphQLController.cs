@@ -49,6 +49,7 @@ namespace TJSPApi.Controllers
                 _.Query = query.Query;
                 _.OperationName = query.OperationName;
                 _.Inputs = inputs;
+                _.EnableMetrics = false;
             });
 
             if (result.Errors?.Count > 0)
@@ -56,53 +57,13 @@ namespace TJSPApi.Controllers
                 return BadRequest();
             }
 
-            return Ok(result);
+            return Ok(result.Data);
         }
-
 
     }
 
     public class QuerySchema : ObjectGraphType 
     {
-        //public QuerySchema(IUnidadeService unidadeService,
-        //                   IAdvogadoService advogadoService) 
-        //{ 
-        //Field<UnidadeType>(
-        //  "unidade",
-        //  arguments: new QueryArguments(
-        //    new QueryArgument<IdGraphType> { Name = "id", Description = "The ID of the Author." }),
-        //  resolve: context =>
-        //  {
-        //      var id = context.GetArgument<int>("id");
-        //      return unidadeService.GetDadosUnidade(new SGDAU.Unidade.Domain.Models.EFTJUnidade() { EFTJUnidadeID = id});
-        //  });
-
-        //Field<ListGraphType<UnidadeType>>(
-        //  "Unidades",
-        //  resolve: context =>
-        //  {
-        //      return unidadeService.GetAllUnidades();
-        //  });
-
-        //Field<AdvogadoType>(
-        //      "Advogado",
-        //      arguments: new QueryArguments(
-        //        new QueryArgument<IdGraphType> { Name = "id", Description = "The ID of the Author." }),
-        //      resolve: context =>
-        //      {
-        //          var id = context.GetArgument<int>("id");
-        //          return advogadoService.PesquisarAdvogado(new SGDAU.Advogado.Domain.Models.EFTJAdvogado()
-        //          {
-        //              EFTJAdvogadoID = id
-        //          }).FirstOrDefault();
-        //      });
-
-        //Field<ListGraphType<AdvogadoType>>(
-        //  "Advogados",
-        //  resolve: context =>
-        //  {
-        //      return advogadoService.Pesquisar(new SGDAU.Advogado.Domain.Models.EFTJAdvogado());
-        //  });
-        //}
+        
     }
 }
