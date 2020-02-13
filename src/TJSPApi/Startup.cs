@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -37,46 +38,49 @@ namespace TJSPApi
             services.AddSingleton<IConfiguration>(this.Configuration);
             services.AddScoped<IDatabaseCommandCommit, DatabaseCommandCommit>();
 
-            services.AddScoped<IUnidadeRepository, UnidadeRepository>();
-            services.AddScoped<IUnidadeService, UnidadeService>();
-            services.AddScoped<IUnidadeQuery, UnidadeQuery>();
+            //services.AddScoped<IUnidadeRepository, UnidadeRepository>();
+            //services.AddScoped<IUnidadeService, UnidadeService>();
+            //services.AddScoped<IUnidadeQuery, UnidadeQuery>();
 
-            services.AddScoped<IAdvogadoRepository, AdvogadoRepository>();
-            services.AddScoped<IAdvogadoService, AdvogadoService>();
-            services.AddScoped<IAdvogadoQuery, AdvogadoQuery>();
+            //services.AddScoped<IAdvogadoRepository, AdvogadoRepository>();
+            //services.AddScoped<IAdvogadoService, AdvogadoService>();
+            //services.AddScoped<IAdvogadoQuery, AdvogadoQuery>();
 
-            this.QueryPartTypesToRegister.Add(typeof(IAdvogadoQuery));
-            this.QueryPartTypesToRegister.Add(typeof(IUnidadeQuery));
+            //this.QueryPartTypesToRegister.Add(typeof(IAdvogadoQuery));
+            //this.QueryPartTypesToRegister.Add(typeof(IUnidadeQuery));
 
-            //foreach ( string assemblyName in GetAssemblies() )
-            //{
-            //    var a = Assembly.Load(assemblyName);
-            //    var types = a.GetTypes();
-            //    for (var t = 0; t < types.Length; t++)
-            //    {
-            //        if (types[t].IsInterface && (types[t].Name.EndsWith("Query") || types[t].Name.EndsWith("Repository") || types[t].Name.EndsWith("Service")))
-            //        {
-            //            var interfaceType = types[t];
-            //            var implementationType = types.FirstOrDefault(t => t.GetInterfaces().Contains(interfaceType));
-            //            services.Add(new ServiceDescriptor(interfaceType, implementationType, ServiceLifetime.Scoped));
+            foreach ( string assemblyName in GetAssemblies() )
+            {
+                var a = Assembly.Load(assemblyName);
+                var types = a.GetTypes();
+                for (var t = 0; t < types.Length; t++)
+                {
+                    if (types[t].IsInterface && (types[t].Name.EndsWith("Query") || types[t].Name.EndsWith("Repository") || types[t].Name.EndsWith("Service")))
+                    {
+                        var interfaceType = types[t];
+                        var implementationType = types.FirstOrDefault(t => t.GetInterfaces().Contains(interfaceType));
+                        services.Add(new ServiceDescriptor(interfaceType, implementationType, ServiceLifetime.Scoped));
 
-            //            if (types[t].Name.EndsWith("Query"))
-            //                this.QueryPartTypesToRegister.Add(interfaceType);
-            //        }
-            //    }
-            //}
+                        if (types[t].Name.EndsWith("Query"))
+                            this.QueryPartTypesToRegister.Add(interfaceType);
+                    }
+                }
+            }
 
             services.AddSingleton<IGraphQLSchemaCollection>(new GraphQLSchemaCollection(this.QueryPartTypesToRegister));
         }
 
         private string[] GetAssemblies()
         {
-            var references = Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(x => x.Name).ToList();
-                references.AddRange(AppDomain.CurrentDomain.GetAssemblies().Select(x => x.GetName().Name).ToList());
-                references.AddRange(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(x => x.Name).ToList());
-                references.AddRange(Assembly.GetCallingAssembly().GetReferencedAssemblies().Select(x => x.Name).ToList());
-
-            return references.Where(x => x.Contains("SGDAU.") && x.Contains(".Domain")).Distinct().ToArray();
+            var result = new List<string>();
+            var path = AppDomain.CurrentDomain.BaseDirectory;
+            var files = new DirectoryInfo(path).GetFiles("SGDAU.*.Domain.dll");
+            if( files != null && files.Length > 0 )
+            {
+                foreach(var file in files)
+                    result.Add(Assembly.LoadFile(file.FullName).GetName().Name);
+            }
+            return result.ToArray();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
