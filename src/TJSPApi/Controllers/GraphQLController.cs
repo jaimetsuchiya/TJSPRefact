@@ -28,15 +28,15 @@ namespace TJSPApi.Controllers
         private QuerySchema CreateSchema()
         {
             var querySchema = new QuerySchema();
-            //var allParts = ((IGraphQLSchemaCollection)this._serviceProvider.GetService(typeof(IGraphQLSchemaCollection))).Items;
-            //foreach(var part in allParts)
-            //{
-            //    var queryPart = this._serviceProvider.GetService(part);
-            //    queryPart.GetType().InvokeMember("SetQueries", BindingFlags.Public, null, queryPart, new object[] { querySchema });
-            //}
+            var allParts = ((IGraphQLSchemaCollection)this._serviceProvider.GetService(typeof(IGraphQLSchemaCollection))).Items;
+            foreach (var part in allParts)
+            {
+                var queryPart = this._serviceProvider.GetService(part);
+                queryPart.GetType().InvokeMember("SetQueries", BindingFlags.InvokeMethod, null, queryPart, new object[] { querySchema });
+            }
 
-            ((IAdvogadoQuery)this._serviceProvider.GetService(typeof(IAdvogadoQuery))).SetQueries(querySchema);
-            ((IUnidadeQuery)this._serviceProvider.GetService(typeof(IUnidadeQuery))).SetQueries(querySchema);
+            //((IAdvogadoQuery)this._serviceProvider.GetService(typeof(IAdvogadoQuery))).SetQueries(querySchema);
+            //((IUnidadeQuery)this._serviceProvider.GetService(typeof(IUnidadeQuery))).SetQueries(querySchema);
             return querySchema;
         }
 
