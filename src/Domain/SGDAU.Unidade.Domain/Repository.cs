@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using SGDAU.Common;
 using SGDAU.Repository.Infrastructure;
 using SGDAU.Unidade.Domain.Models;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace SGDAU.Unidade.Domain
 {
-    public interface IUnidadeRepository
+    public interface IUnidadeRepository: IRepository
     {
         ICollection<EFTJUnidade> GetAllUnidades();
         ICollection<EFTJUnidade> IncluiUnidade(IDatabaseCommandCommit databaseCommandCommit, EFTJUnidade unidade);

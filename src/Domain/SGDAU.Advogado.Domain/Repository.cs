@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SGDAU.Advogado.Domain.Models;
+using SGDAU.Common;
 using SGDAU.Repository.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace SGDAU.Advogado.Domain
 {
-    public interface IAdvogadoRepository
+    public interface IAdvogadoRepository: IRepository
     {
         ICollection<EFTJAdvogado> Pesquisar(EFTJAdvogado advogado);
         int Inserir(IDatabaseCommandCommit databaseCommandCommit, EFTJAdvogado advogado);

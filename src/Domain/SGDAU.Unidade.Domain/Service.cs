@@ -1,11 +1,12 @@
-﻿using SGDAU.Repository.Infrastructure;
+﻿using SGDAU.Common;
+using SGDAU.Repository.Infrastructure;
 using SGDAU.Unidade.Domain.Models;
 using System;
 using System.Collections.Generic;
 
 namespace SGDAU.Unidade.Domain
 {
-    public interface IUnidadeService
+    public interface IUnidadeService: IService
     {
         ICollection<EFTJUnidade> GetAllUnidades();
         ICollection<EFTJUnidade> IncluiUnidade(IDatabaseCommandCommit databaseCommandCommit, EFTJUnidade unidade);

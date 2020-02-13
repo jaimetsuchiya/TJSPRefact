@@ -1,4 +1,5 @@
 ﻿using SGDAU.Advogado.Domain.Models;
+using SGDAU.Common;
 using SGDAU.Repository.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace SGDAU.Advogado.Domain
 {
-    public interface IAdvogadoService
+    public interface IAdvogadoService: IService
     {
         ICollection<EFTJAdvogado> Pesquisar(EFTJAdvogado advogado);
 
