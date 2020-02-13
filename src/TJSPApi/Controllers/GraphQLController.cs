@@ -17,21 +17,20 @@ namespace TJSPApi.Controllers
     [ApiController]
     public class GraphQLController : ControllerBase
     {
-        private readonly IUnidadeService _unidadeService;
-        private readonly IAdvogadoService _advogadoService;
+        private readonly IAdvogadoQuery _advogadoQuery;
+        private readonly IUnidadeQuery _unidadeQuery;
 
-        public GraphQLController(IUnidadeService unidadeService, 
-                                 IAdvogadoService advogadoService)
+        public GraphQLController(IAdvogadoQuery advogadoQuery, IUnidadeQuery unidadeQuery)
         {
-            _unidadeService = unidadeService;
-            _advogadoService = advogadoService;
+            this._advogadoQuery = advogadoQuery;
+            this._unidadeQuery = unidadeQuery;
         }
 
         private QuerySchema CreateSchema()
         {
             var querySchema = new QuerySchema();
-            new AdvogadoQuery(this._advogadoService).SetQueries(querySchema);
-            new UnidadeQuery(this._unidadeService).SetQueries(querySchema);
+            this._advogadoQuery.SetQueries(querySchema);
+            this._unidadeQuery.SetQueries(querySchema);
             return querySchema;
         }
 
@@ -65,6 +64,45 @@ namespace TJSPApi.Controllers
 
     public class QuerySchema : ObjectGraphType 
     {
-        
+        //public QuerySchema(IUnidadeService unidadeService,
+        //                   IAdvogadoService advogadoService) 
+        //{ 
+        //Field<UnidadeType>(
+        //  "unidade",
+        //  arguments: new QueryArguments(
+        //    new QueryArgument<IdGraphType> { Name = "id", Description = "The ID of the Author." }),
+        //  resolve: context =>
+        //  {
+        //      var id = context.GetArgument<int>("id");
+        //      return unidadeService.GetDadosUnidade(new SGDAU.Unidade.Domain.Models.EFTJUnidade() { EFTJUnidadeID = id});
+        //  });
+
+        //Field<ListGraphType<UnidadeType>>(
+        //  "Unidades",
+        //  resolve: context =>
+        //  {
+        //      return unidadeService.GetAllUnidades();
+        //  });
+
+        //Field<AdvogadoType>(
+        //      "Advogado",
+        //      arguments: new QueryArguments(
+        //        new QueryArgument<IdGraphType> { Name = "id", Description = "The ID of the Author." }),
+        //      resolve: context =>
+        //      {
+        //          var id = context.GetArgument<int>("id");
+        //          return advogadoService.PesquisarAdvogado(new SGDAU.Advogado.Domain.Models.EFTJAdvogado()
+        //          {
+        //              EFTJAdvogadoID = id
+        //          }).FirstOrDefault();
+        //      });
+
+        //Field<ListGraphType<AdvogadoType>>(
+        //  "Advogados",
+        //  resolve: context =>
+        //  {
+        //      return advogadoService.Pesquisar(new SGDAU.Advogado.Domain.Models.EFTJAdvogado());
+        //  });
+        //}
     }
 }

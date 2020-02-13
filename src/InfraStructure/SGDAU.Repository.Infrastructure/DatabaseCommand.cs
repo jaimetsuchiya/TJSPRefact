@@ -3,22 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
-using System.Configuration;
 using System.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace SGDAU.Repository.Infrastructure
 {
     public class DatabaseCommand<T> where T : class
     {
         private DatabaseQueryCommand cmd = null;
-        public DatabaseCommand()
+        public DatabaseCommand(IConfiguration config)
         {
-            cmd = new DatabaseQueryCommand();
-        }
-
-        internal DatabaseCommand(string commandID)
-        {
-            cmd = new DatabaseQueryCommand(commandID);
+            cmd = new DatabaseQueryCommand(config);
         }
 
         public virtual ICollection<T> Select(string procedure, List<SqlParameter> parameters = null)
@@ -34,17 +29,16 @@ namespace SGDAU.Repository.Infrastructure
 
     public class DatabaseQueryCommand
     {
-        private string connectionID = "REFIConnectionString";
+        private string connectionString = "";
 
-        public DatabaseQueryCommand() { }
-        internal DatabaseQueryCommand(string connectionID)
-        {
-            this.connectionID = connectionID;
+        public DatabaseQueryCommand(IConfiguration config) 
+        { 
+            this.connectionString = config.GetSection("ConnectionStrings:REFIConnectionString").Value;
         }
 
         private SqlConnection GetConnection()
         {
-            return new SqlConnection(ConfigurationManager.ConnectionStrings[this.connectionID].ConnectionString);
+            return new SqlConnection(connectionString);
         }
 
         public virtual ICollection<T> Select<T>(string procedure, List<SqlParameter> parameters = null)

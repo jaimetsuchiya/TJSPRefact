@@ -6,7 +6,11 @@ using System.Text;
 
 namespace SGDAU.Unidade.Domain
 {
-    public class UnidadeQuery: IGraphQLSchemaPart
+    public interface IUnidadeQuery : IGraphQLSchemaPart
+    { 
+    }
+
+    public class UnidadeQuery: IUnidadeQuery
     {
         private readonly IUnidadeService _service = null;
         public UnidadeQuery(IUnidadeService service) => _service = service;

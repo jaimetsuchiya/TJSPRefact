@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace SGDAU.Repository.Infrastructure
 {
@@ -27,10 +28,12 @@ namespace SGDAU.Repository.Infrastructure
         private SqlConnection cn;
         private SqlCommand cmd;
         private SqlTransaction transaction;
+        private IConfiguration config;
 
-        public DatabaseCommandCommit()
+        public DatabaseCommandCommit(IConfiguration config)
         {
-            this.cn = new SqlConnection(ConfigurationManager.ConnectionStrings["REFIConnectionString"].ConnectionString);            
+            this.config = config;
+            this.cn = new SqlConnection(config.GetSection("ConnectionStrings:REFIConnectionString").Value);            
         }
 
         public SqlConnection GetConnection()
@@ -73,7 +76,7 @@ namespace SGDAU.Repository.Infrastructure
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -112,7 +115,7 @@ namespace SGDAU.Repository.Infrastructure
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -150,7 +153,7 @@ namespace SGDAU.Repository.Infrastructure
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -192,7 +195,7 @@ namespace SGDAU.Repository.Infrastructure
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -234,12 +237,12 @@ namespace SGDAU.Repository.Infrastructure
             catch(SqlException err)
             {
                 transaction.Rollback();
-                throw err;
+                throw;
             }
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -279,7 +282,7 @@ namespace SGDAU.Repository.Infrastructure
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -296,7 +299,7 @@ namespace SGDAU.Repository.Infrastructure
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -329,42 +332,36 @@ namespace SGDAU.Repository.Infrastructure
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
 
         public int UpdateWithOutTransaction(string procedure, List<SqlParameter> parameters)
         {
-            try
+            int totalRecords = 0;
+
+            using (SqlCommand cmdWithOutTransaction = new SqlCommand("", new SqlConnection(config.GetSection("ConnectionStrings:REFIConnectionString").Value)))
             {
-                int totalRecords = 0;
 
-                using (SqlCommand cmdWithOutTransaction = new SqlCommand("", new SqlConnection(ConfigurationManager.ConnectionStrings["REFIConnectionString"].ConnectionString)))
+
+                cmdWithOutTransaction.CommandType = System.Data.CommandType.StoredProcedure;
+                cmdWithOutTransaction.CommandText = procedure;
+                cmdWithOutTransaction.Parameters.Clear();
+
+                cmdWithOutTransaction.Connection.Open();
+                cmdWithOutTransaction.CommandTimeout = 300;
+
+                if (parameters != null)
                 {
-
-
-                    cmdWithOutTransaction.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmdWithOutTransaction.CommandText = procedure;
-                    cmdWithOutTransaction.Parameters.Clear();
-
-                    cmdWithOutTransaction.Connection.Open();
-                    cmdWithOutTransaction.CommandTimeout = 300;
-
-                    if (parameters != null)
-                    {
-                        parameters.ForEach(x => cmdWithOutTransaction.Parameters.Add(x));
-                    }
-
-                    totalRecords = Convert.ToInt32(cmdWithOutTransaction.ExecuteNonQuery());
+                    parameters.ForEach(x => cmdWithOutTransaction.Parameters.Add(x));
                 }
 
-                return totalRecords;
+                totalRecords = Convert.ToInt32(cmdWithOutTransaction.ExecuteNonQuery());
             }
-            catch (Exception ex)
-            {                
-                throw new Exception(ex.Message);
-            }
+
+            return totalRecords;
+         
         }
     }
 }

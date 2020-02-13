@@ -20,7 +20,7 @@ namespace SGDAU.Unidade.Domain
         EFTJPredio GetDadosAlterarPredio(EFTJUnidade unidade);
     }
 
-    public class UnidadeService : DatabaseCommand<EFTJUnidade>, IUnidadeService
+    public class UnidadeService : IUnidadeService
     {
         private readonly IUnidadeRepository unidadeRepository;
 

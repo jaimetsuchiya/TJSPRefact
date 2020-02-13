@@ -7,7 +7,9 @@ using System.Text;
 
 namespace SGDAU.Advogado.Domain
 {
-    public class AdvogadoQuery: IGraphQLSchemaPart
+    public interface IAdvogadoQuery : IGraphQLSchemaPart { }
+
+    public class AdvogadoQuery: IAdvogadoQuery
     {
         private readonly IAdvogadoService _service = null;
         public AdvogadoQuery(IAdvogadoService service) => _service = service;
@@ -33,7 +35,7 @@ namespace SGDAU.Advogado.Domain
               "Advogados",
               resolve: context =>
               {
-                  return _service.Pesquisar(new Models.EFTJAdvogado());
+                  return _service.PesquisarAdvogado(new Models.EFTJAdvogado() { QuantidadeRegistrosPorPagina = 100, pagina = 1 });
               });
         }
     }

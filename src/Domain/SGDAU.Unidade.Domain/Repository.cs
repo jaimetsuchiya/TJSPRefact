@@ -1,4 +1,5 @@
-﻿using SGDAU.Repository.Infrastructure;
+﻿using Microsoft.Extensions.Configuration;
+using SGDAU.Repository.Infrastructure;
 using SGDAU.Unidade.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,10 @@ namespace SGDAU.Unidade.Domain
 
     public class UnidadeRepository : DatabaseQueryCommand, IUnidadeRepository
     {
+        public UnidadeRepository(IConfiguration config): base(config)
+        {
+        }
+
         public string Procedure
         {
             get { return "unidade_sgdai"; }

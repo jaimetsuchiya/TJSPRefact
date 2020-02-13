@@ -1,4 +1,5 @@
-﻿using SGDAU.Advogado.Domain.Models;
+﻿using Microsoft.Extensions.Configuration;
+using SGDAU.Advogado.Domain.Models;
 using SGDAU.Repository.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,11 @@ namespace SGDAU.Advogado.Domain
 
     public class AdvogadoRepository : DatabaseQueryCommand, IAdvogadoRepository
     {
+        public AdvogadoRepository(IConfiguration config) : base(config)
+        {
+        }
+
+
         public static string Procedure
         {
             get { return "advogado_sgdai"; }
@@ -99,12 +105,16 @@ namespace SGDAU.Advogado.Domain
                 parameters.Add(new SqlParameter("@veEFTJAdvogadoID", advogado.EFTJAdvogadoID));
             if (advogado.AdvogadoAtivo != null)
                 parameters.Add(new SqlParameter("@veAtivo", advogado.AdvogadoAtivo));
-            if ((advogado.OrigemList.FirstOrDefault(x => x.Origem == "MANUAL") != null))
-                parameters.Add(new SqlParameter("@veOrigemManual", advogado.OrigemList.FirstOrDefault(x => x.Origem == "MANUAL").Origem));
-            if ((advogado.OrigemList.FirstOrDefault(x => x.Origem == "IMPORTACAO") != null))
-                parameters.Add(new SqlParameter("@veOrigemImportacao", advogado.OrigemList.FirstOrDefault(x => x.Origem == "IMPORTACAO").Origem));
-            if ((advogado.OrigemList.Where(x => x.Origem == "WEBSERVICE").FirstOrDefault() != null))
-                parameters.Add(new SqlParameter("@veOrigemWebService", advogado.OrigemList.FirstOrDefault(x => x.Origem == "WEBSERVICE").Origem));
+
+            if(advogado.OrigemList != null && advogado.OrigemList.Any())
+            {
+                if ((advogado.OrigemList.FirstOrDefault(x => x.Origem == "MANUAL") != null))
+                    parameters.Add(new SqlParameter("@veOrigemManual", advogado.OrigemList.FirstOrDefault(x => x.Origem == "MANUAL").Origem));
+                if ((advogado.OrigemList.FirstOrDefault(x => x.Origem == "IMPORTACAO") != null))
+                    parameters.Add(new SqlParameter("@veOrigemImportacao", advogado.OrigemList.FirstOrDefault(x => x.Origem == "IMPORTACAO").Origem));
+                if ((advogado.OrigemList.Where(x => x.Origem == "WEBSERVICE").FirstOrDefault() != null))
+                    parameters.Add(new SqlParameter("@veOrigemWebService", advogado.OrigemList.FirstOrDefault(x => x.Origem == "WEBSERVICE").Origem));
+            }
 
             parameters.Add(new SqlParameter("@vePaginaAtual", advogado.pagina));
             parameters.Add(new SqlParameter("@veQuantidadeRegistros", advogado.QuantidadeRegistrosPorPagina));

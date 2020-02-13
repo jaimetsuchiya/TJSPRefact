@@ -16,10 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\SGDAU.Advogado.Domain\SGDAU.Advogado.Domain.csproj" />
+    <ProjectReference Include="..\Domain\SGDAU.Advogado.Domain\SGDAU.Advogado.Domain.csproj">
+      <Private>true</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\SGDAU.Unidade.Domain\SGDAU.Unidade.Domain.csproj" />
-    <ProjectReference Include="..\InfraStructure\SGDAU.Common\SGDAU.Common.csproj" />
-    <ProjectReference Include="..\InfraStructure\SGDAU.Repository.Infrastructure\SGDAU.Repository.Infrastructure.csproj" />
+    <ProjectReference Include="..\InfraStructure\SGDAU.Common\SGDAU.Common.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\InfraStructure\SGDAU.Repository.Infrastructure\SGDAU.Repository.Infrastructure.csproj">
+      <Private>true</Private>
+    </ProjectReference>
   </ItemGroup>
 
 
