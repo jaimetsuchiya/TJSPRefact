@@ -5,38 +5,47 @@ using System.Reflection;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using SGDAU.Advogado.Domain;
 using SGDAU.Common;
 using SGDAU.Unidade.Domain;
 using TJSPApi.DTOs;
+using TJSPApi.Infrastructure;
 
 namespace TJSPApi.Controllers
 {
+    [Authorize]
     [Route("graphql")]
     [ApiController]
     public class GraphQLController : ControllerBase
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly IMemoryCache _memoryCache;
 
-        public GraphQLController(IServiceProvider serviceProvider)
+        public GraphQLController(IServiceProvider serviceProvider, IMemoryCache memoryCache)
         {
             this._serviceProvider = serviceProvider;
+            this._memoryCache = memoryCache;
         }
 
         private QuerySchema CreateSchema()
         {
             var querySchema = new QuerySchema();
-            var allParts = ((IGraphQLSchemaCollection)this._serviceProvider.GetService(typeof(IGraphQLSchemaCollection))).Items;
-            foreach (var part in allParts)
+            if (!this._memoryCache.TryGetValue("Schema", out querySchema))
             {
-                var queryPart = this._serviceProvider.GetService(part);
-                queryPart.GetType().InvokeMember("SetQueries", BindingFlags.InvokeMethod, null, queryPart, new object[] { querySchema });
+                var allParts = ((IGraphQLSchemaCollection)this._serviceProvider.GetService(typeof(IGraphQLSchemaCollection))).Items;
+                foreach (var part in allParts)
+                {
+                    var queryPart = this._serviceProvider.GetService(part);
+                    queryPart.GetType().InvokeMember("SetQueries", BindingFlags.InvokeMethod, null, queryPart, new object[] { querySchema });
+                }
+                this._memoryCache.Set("Schema", 
+                                      querySchema, 
+                                      new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(60)));
             }
-
-            //((IAdvogadoQuery)this._serviceProvider.GetService(typeof(IAdvogadoQuery))).SetQueries(querySchema);
-            //((IUnidadeQuery)this._serviceProvider.GetService(typeof(IUnidadeQuery))).SetQueries(querySchema);
             return querySchema;
         }
 
@@ -66,10 +75,5 @@ namespace TJSPApi.Controllers
             return Ok(result.Data);
         }
 
-    }
-
-    public class QuerySchema : ObjectGraphType 
-    {
-        
     }
 }

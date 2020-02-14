@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Domain\SGDAU.Advogado.Domain\SGDAU.Advogado.Domain.csproj">
       <Private>true</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Domain\SGDAU.Seguranca.Domain\SGDAU.Seguranca.Domain.csproj" />
     <ProjectReference Include="..\Domain\SGDAU.Unidade.Domain\SGDAU.Unidade.Domain.csproj" />
     <ProjectReference Include="..\InfraStructure\SGDAU.Common\SGDAU.Common.csproj">
       <Private>true</Private>
