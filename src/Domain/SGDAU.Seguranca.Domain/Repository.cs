@@ -8,16 +8,16 @@ using System.Text;
 
 namespace SGDAU.Seguranca.Domain
 {
-    public interface IUsuarioRepository
+    public interface ISegurancaRepository
     {
         EFTJUserweb ConsultaUsuario(EFTJUserweb userWeb);
         EFTJUserweb Login(EFTJUserweb userWeb);
 
     }
 
-    public class UsuarioRepository : DatabaseQueryCommand, IUsuarioRepository
+    public class SegurancaRepository : DatabaseQueryCommand, ISegurancaRepository
     {
-        public UsuarioRepository(IConfiguration config) : base(config)
+        public SegurancaRepository(IConfiguration config) : base(config)
         {
         }
 

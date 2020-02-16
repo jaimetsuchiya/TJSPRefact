@@ -16,10 +16,8 @@ namespace SGDAU.Common
         public int? RegionID { get; set; }
         public int? BusinessUnitID { get; set; }
         public int? PrinterID { get; set; }
-        public decimal? AllocatedComarcaID { get; set; }
         public decimal? AllocatedVaraID { get; set; }
         public string ClientID { get; set; }
-
-        public string Seed { get; set; }
+        public string Hash { get; set; }
     }
 }

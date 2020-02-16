@@ -36,6 +36,7 @@ namespace TJSPApi.Controllers
             var querySchema = new QuerySchema();
             if (!this._memoryCache.TryGetValue("Schema", out querySchema))
             {
+                querySchema = new QuerySchema();
                 var allParts = ((IGraphQLSchemaCollection)this._serviceProvider.GetService(typeof(IGraphQLSchemaCollection))).Items;
                 foreach (var part in allParts)
                 {

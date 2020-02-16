@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,9 @@ using SGDAU.Advogado.Domain;
 using SGDAU.Common;
 using SGDAU.Repository.Infrastructure;
 using SGDAU.Unidade.Domain;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using SGDAU.Seguranca.Domain;
 
 namespace TJSPApi
 {
@@ -38,6 +42,27 @@ namespace TJSPApi
             services.AddControllers();
             services.AddSingleton<IConfiguration>(this.Configuration);
             services.AddScoped<IDatabaseCommandCommit, DatabaseCommandCommit>();
+            services.AddScoped<ISegurancaRepository, SegurancaRepository>();
+            services.AddScoped<ISegurancaService, SegurancaService>();
+
+            var key = Encoding.ASCII.GetBytes(this.Configuration.GetSection("Authentication:SecretKey").Value);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             //services.AddScoped<IUnidadeRepository, UnidadeRepository>();
             //services.AddScoped<IUnidadeService, UnidadeService>();
@@ -75,11 +100,25 @@ namespace TJSPApi
         {
             var result = new List<string>();
             var path = AppDomain.CurrentDomain.BaseDirectory;
+            var exclusion = new string[] { "Seguranca", "Parametros" };
             var files = new DirectoryInfo(path).GetFiles("SGDAU.*.Domain.dll");
             if( files != null && files.Length > 0 )
             {
                 foreach(var file in files)
-                    result.Add(Assembly.LoadFile(file.FullName).GetName().Name);
+                {
+                    bool add = true;
+                    for(var i=0; i < exclusion.Length; i++)
+                    {
+                        if (file.FullName.Contains(exclusion[i]))
+                        {
+                            add = false;
+                            break;
+                        }
+                    }
+                    if(add)
+                        result.Add(Assembly.LoadFile(file.FullName).GetName().Name);
+                }
+                    
             }
             return result.ToArray();
         }
@@ -96,6 +135,7 @@ namespace TJSPApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
