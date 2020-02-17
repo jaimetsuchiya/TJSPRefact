@@ -1,0 +1,54 @@
+Refatoração Asp.Net Core + Vue + GraphQL + DDD 
+
+https://stackoverflow.com/questions/47171737/asp-net-core-routing-to-controllers-in-external-assembly
+https://developer.okta.com/blog/2019/04/16/graphql-api-with-aspnetcore
+
+https://developer.okta.com/signup/
+jaime.tsuchiya@gmail.com
+Dezembro2008
+
+
+POST https://localhost:44306/graphql
+Content-type:application/json
+
+{
+  "query": "{unidade(id: 4){description}}"
+}
+
+{
+  "query": "{unidade(id: 4){eFTJUnidadeID,description}}"
+}
+
+{
+  "query": "{unidades {eFTJUnidadeID,description}}"
+}
+
+{
+  "query": "{advogado(id: 4){nome, codigo}}"
+}
+
+{
+  "query": "{advogados {nome, codigo, ativo, origem}}"
+}
+
+{
+  "query": "{advogados {nome, codigo, ativo}}"
+}
+
+POST https://localhost:44306/api/security/Authenticate
+Content-type:application/json
+
+{
+"clientId": "b5efeeaf2d46854a78cbe4a3ca50ad6b",
+"login": "GSWTJ4126",
+"password":"Dezembro2008"
+}
+
+{"actor":null,"audiences":[],"claims":[{"issuer":"Iron Mountain","originalIssuer":"Iron Mountain","properties":{},"subject":null,"type":"unique_name","value":"JAIME TSUCHIYA","valueType":"http://www.w3.org/2001/XMLSchema#string"},{"issuer":"Iron Mountain","originalIssuer":"Iron Mountain","properties":{},"subject":null,"type":"http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata","value":"{\"Login\":\"GSWTJ4126\",\"FirstName\":\"JAIME TSUCHIYA\",\"LastName\":null,\"UserID\":7626,\"GroupID\":12,\"CategoryID\":4,\"RegionID\":null,\"BusinessUnitID\":null,\"PrinterID\":null,\"AllocatedVaraID\":0.0,\"ClientID\":\"b5efeeaf2d46854a78cbe4a3ca50ad6b\"}","valueType":"http://www.w3.org/2001/XMLSchema#string"},{"issuer":"Iron Mountain","originalIssuer":"Iron Mountain","properties":{},"subject":null,"type":"nbf","value":"1581860769","valueType":"http://www.w3.org/2001/XMLSchema#integer"},{"issuer":"Iron Mountain","originalIssuer":"Iron Mountain","properties":{},"subject":null,"type":"exp","value":"1581889569","valueType":"http://www.w3.org/2001/XMLSchema#integer"},{"issuer":"Iron Mountain","originalIssuer":"Iron Mountain","properties":{},"subject":null,"type":"iat","value":"1581860769","valueType":"http://www.w3.org/2001/XMLSchema#integer"},{"issuer":"Iron Mountain","originalIssuer":"Iron Mountain","properties":{},"subject":null,"type":"iss","value":"Iron Mountain","valueType":"http://www.w3.org/2001/XMLSchema#string"}],"encodedHeader":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9","encodedPayload":"eyJ1bmlxdWVfbmFtZSI6IkpBSU1FIFRTVUNISVlBIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy91c2VyZGF0YSI6IntcIkxvZ2luXCI6XCJHU1dUSjQxMjZcIixcIkZpcnN0TmFtZVwiOlwiSkFJTUUgVFNVQ0hJWUFcIixcIkxhc3ROYW1lXCI6bnVsbCxcIlVzZXJJRFwiOjc2MjYsXCJHcm91cElEXCI6MTIsXCJDYXRlZ29yeUlEXCI6NCxcIlJlZ2lvbklEXCI6bnVsbCxcIkJ1c2luZXNzVW5pdElEXCI6bnVsbCxcIlByaW50ZXJJRFwiOm51bGwsXCJBbGxvY2F0ZWRWYXJhSURcIjowLjAsXCJDbGllbnRJRFwiOlwiYjVlZmVlYWYyZDQ2ODU0YTc4Y2JlNGEzY2E1MGFkNmJcIn0iLCJuYmYiOjE1ODE4NjA3NjksImV4cCI6MTU4MTg4OTU2OSwiaWF0IjoxNTgxODYwNzY5LCJpc3MiOiJJcm9uIE1vdW50YWluIn0","header":{"alg":"HS256","typ":"JWT"},"id":null,"issuer":"Iron Mountain","payload":{"unique_name":"JAIME TSUCHIYA","http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata":"{\"Login\":\"GSWTJ4126\",\"FirstName\":\"JAIME TSUCHIYA\",\"LastName\":null,\"UserID\":7626,\"GroupID\":12,\"CategoryID\":4,\"RegionID\":null,\"BusinessUnitID\":null,\"PrinterID\":null,\"AllocatedVaraID\":0.0,\"ClientID\":\"b5efeeaf2d46854a78cbe4a3ca50ad6b\"}","nbf":1581860769,"exp":1581889569,"iat":1581860769,"iss":"Iron Mountain"},"innerToken":null,"rawAuthenticationTag":null,"rawCiphertext":null,"rawData":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkpBSU1FIFRTVUNISVlBIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy91c2VyZGF0YSI6IntcIkxvZ2luXCI6XCJHU1dUSjQxMjZcIixcIkZpcnN0TmFtZVwiOlwiSkFJTUUgVFNVQ0hJWUFcIixcIkxhc3ROYW1lXCI6bnVsbCxcIlVzZXJJRFwiOjc2MjYsXCJHcm91cElEXCI6MTIsXCJDYXRlZ29yeUlEXCI6NCxcIlJlZ2lvbklEXCI6bnVsbCxcIkJ1c2luZXNzVW5pdElEXCI6bnVsbCxcIlByaW50ZXJJRFwiOm51bGwsXCJBbGxvY2F0ZWRWYXJhSURcIjowLjAsXCJDbGllbnRJRFwiOlwiYjVlZmVlYWYyZDQ2ODU0YTc4Y2JlNGEzY2E1MGFkNmJcIn0iLCJuYmYiOjE1ODE4NjA3NjksImV4cCI6MTU4MTg4OTU2OSwiaWF0IjoxNTgxODYwNzY5LCJpc3MiOiJJcm9uIE1vdW50YWluIn0.U4HOpRdWy4Ak5pJofPRvNPChWdi9ZZVv5i7MfHFjTBo","rawEncryptedKey":null,"rawInitializationVector":null,"rawHeader":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9","rawPayload":"eyJ1bmlxdWVfbmFtZSI6IkpBSU1FIFRTVUNISVlBIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy91c2VyZGF0YSI6IntcIkxvZ2luXCI6XCJHU1dUSjQxMjZcIixcIkZpcnN0TmFtZVwiOlwiSkFJTUUgVFNVQ0hJWUFcIixcIkxhc3ROYW1lXCI6bnVsbCxcIlVzZXJJRFwiOjc2MjYsXCJHcm91cElEXCI6MTIsXCJDYXRlZ29yeUlEXCI6NCxcIlJlZ2lvbklEXCI6bnVsbCxcIkJ1c2luZXNzVW5pdElEXCI6bnVsbCxcIlByaW50ZXJJRFwiOm51bGwsXCJBbGxvY2F0ZWRWYXJhSURcIjowLjAsXCJDbGllbnRJRFwiOlwiYjVlZmVlYWYyZDQ2ODU0YTc4Y2JlNGEzY2E1MGFkNmJcIn0iLCJuYmYiOjE1ODE4NjA3NjksImV4cCI6MTU4MTg4OTU2OSwiaWF0IjoxNTgxODYwNzY5LCJpc3MiOiJJcm9uIE1vdW50YWluIn0","rawSignature":"U4HOpRdWy4Ak5pJofPRvNPChWdi9ZZVv5i7MfHFjTBo","securityKey":null,"signatureAlgorithm":"HS256","signingCredentials":{"algorithm":"http://www.w3.org/2001/04/xmldsig-more#hmac-sha256","digest":null,"cryptoProviderFactory":null,"key":{"keySize":256,"keyId":null,"cryptoProviderFactory":{"cryptoProviderCache":{},"customCryptoProvider":null,"cacheSignatureProviders":true}},"kid":null},"encryptingCredentials":null,"signingKey":null,"subject":null,"validFrom":"2020-02-16T13:46:09Z","validTo":"2020-02-16T21:46:09Z","issuedAt":"2020-02-16T13:46:09Z"}
+
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkpBSU1FIFRTVUNISVlBIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy91c2VyZGF0YSI6IntcIkxvZ2luXCI6XCJHU1dUSjQxMjZcIixcIkZpcnN0TmFtZVwiOlwiSkFJTUUgVFNVQ0hJWUFcIixcIkxhc3ROYW1lXCI6bnVsbCxcIlVzZXJJRFwiOjc2MjYsXCJHcm91cElEXCI6MTIsXCJDYXRlZ29yeUlEXCI6NCxcIlJlZ2lvbklEXCI6bnVsbCxcIkJ1c2luZXNzVW5pdElEXCI6bnVsbCxcIlByaW50ZXJJRFwiOm51bGwsXCJBbGxvY2F0ZWRWYXJhSURcIjowLjAsXCJDbGllbnRJRFwiOlwiYjVlZmVlYWYyZDQ2ODU0YTc4Y2JlNGEzY2E1MGFkNmJcIixcIkhhc2hcIjpcIjhjMGQzODE3ZWFkNTQ0NjRlYzNhYTQ5YmZiMDNmMDVhMzlmNGFhYWVkNjEyMTQwNTU3MTA5M2Y2MTZiMDY5NmRcIn0iLCJuYmYiOjE1ODE5MzQ0NzUsImV4cCI6MTU4MTk2MzI3NSwiaWF0IjoxNTgxOTM0NDc1LCJpc3MiOiJJcm9uIE1vdW50YWluIn0.3EMBR-RJ79KKKWfUYoYkDP8tI5Kr4-KKUyM1hhm7AZM
+
+GET https://localhost:44306/api/security/user
+Content-type:application/json
+
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkpBSU1FIFRTVUNISVlBIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy91c2VyZGF0YSI6IntcIkxvZ2luXCI6XCJHU1dUSjQxMjZcIixcIkZpcnN0TmFtZVwiOlwiSkFJTUUgVFNVQ0hJWUFcIixcIkxhc3ROYW1lXCI6bnVsbCxcIlVzZXJJRFwiOjc2MjYsXCJHcm91cElEXCI6MTIsXCJDYXRlZ29yeUlEXCI6NCxcIlJlZ2lvbklEXCI6bnVsbCxcIkJ1c2luZXNzVW5pdElEXCI6bnVsbCxcIlByaW50ZXJJRFwiOm51bGwsXCJBbGxvY2F0ZWRWYXJhSURcIjowLjAsXCJDbGllbnRJRFwiOlwiYjVlZmVlYWYyZDQ2ODU0YTc4Y2JlNGEzY2E1MGFkNmJcIixcIkhhc2hcIjpcIjhjMGQzODE3ZWFkNTQ0NjRlYzNhYTQ5YmZiMDNmMDVhMzlmNGFhYWVkNjEyMTQwNTU3MTA5M2Y2MTZiMDY5NmRcIn0iLCJuYmYiOjE1ODE5MzQ0NzUsImV4cCI6MTU4MTk2MzI3NSwiaWF0IjoxNTgxOTM0NDc1LCJpc3MiOiJJcm9uIE1vdW50YWluIn0.3EMBR-RJ79KKKWfUYoYkDP8tI5Kr4-KKUyM1hhm7AZM
