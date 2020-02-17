@@ -88,7 +88,7 @@ namespace SGDAU.Seguranca.Domain
             };
 
             //Calcula o hash de validação com os dados do usuário
-            var hash = String.Join("", System.Security.Cryptography.SHA1.Create().ComputeHash(
+            var hash = String.Join("", System.Security.Cryptography.SHA256.Create().ComputeHash(
                                 Encoding.UTF8.GetBytes(
                                     String.Concat(this.configurationService.GetSection("Authentication:Seed").Value, Newtonsoft.Json.JsonConvert.SerializeObject(jwtData), this.configurationService.GetSection("Authentication:Sufix").Value)
                                 )

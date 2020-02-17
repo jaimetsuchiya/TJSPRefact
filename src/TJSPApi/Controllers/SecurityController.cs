@@ -55,6 +55,13 @@ namespace TJSPApi.Controllers
         {
             throw new NotImplementedException();
         }
-        
+
+        [HttpGet("user")]
+        [Authorize]
+        public async Task<IActionResult> CurrentUser()
+        {
+            var user = HttpContext.User.Claims.Select(x => x.Value);
+            return Ok(user);
+        }
     }
 }

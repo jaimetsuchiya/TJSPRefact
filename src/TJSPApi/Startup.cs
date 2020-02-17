@@ -35,7 +35,6 @@ namespace TJSPApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
@@ -60,7 +59,8 @@ namespace TJSPApi
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    ValidAudiences = this.Configuration.GetSection("Authentication:Clients").Get<string[]>()
                 };
             });
 
