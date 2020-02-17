@@ -44,7 +44,9 @@ namespace TJSPApi
             services.AddScoped<ISegurancaRepository, SegurancaRepository>();
             services.AddScoped<ISegurancaService, SegurancaService>();
 
+            var audiences = this.Configuration.GetSection("Authentication:Audiences").Get<string[]>();
             var key = Encoding.ASCII.GetBytes(this.Configuration.GetSection("Authentication:SecretKey").Value);
+            
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -59,8 +61,8 @@ namespace TJSPApi
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidAudiences = this.Configuration.GetSection("Authentication:Clients").Get<string[]>()
+                    ValidateAudience = audiences.Any(),
+                    ValidAudiences = audiences
                 };
             });
 
