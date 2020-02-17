@@ -31,7 +31,7 @@ namespace TJSPApi.Controllers
 
         [HttpPost("authenticate")]
         [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromBody] Authenticate dto)
+        public async Task<IActionResult> Authenticate([FromBody] Authenticate.Request dto)
         {
             //Valida o Client informado
             if (!this.configurationService.GetSection("Authentication:Clients").Get<string[]>().Contains(dto.ClientId))

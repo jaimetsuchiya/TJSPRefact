@@ -8,17 +8,27 @@ namespace SGDAU.Common
 {
     public class Authenticate
     {
-        [Display(Name = "ID Cliente")]
-        [Required]
-        public string ClientId { get; set; }
+        public class Request
+        {
+            [Display(Name = "ID Cliente")]
+            [Required]
+            public string ClientId { get; set; }
 
-        [Display(Name = "Login")]
-        [Required]
-        public string Login { get; set; }
+            [Display(Name = "Login")]
+            [Required]
+            public string Login { get; set; }
 
-        [Display(Name = "Senha")]
-        [Required]
-        public string Password { get; set; }
+            [Display(Name = "Senha")]
+            [Required]
+            public string Password { get; set; }
+        }
+
+        public class Response
+        {
+            public JwtData UserData { get; set; }
+
+            public string Token { get; set; }
+        }
     }
 
     public class ChangePassword

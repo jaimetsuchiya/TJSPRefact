@@ -15,8 +15,7 @@ namespace SGDAU.Seguranca.Domain
     {
         EFTJUserweb ConsultaUsuario(EFTJUserweb userWeb);
         EFTJUserweb Login(EFTJUserweb userWeb);
-
-        string Authenticate(Authenticate dto);
+        Authenticate.Response Authenticate(Authenticate.Request dto);
     }
 
     public class SegurancaService: ISegurancaService
@@ -42,16 +41,16 @@ namespace SGDAU.Seguranca.Domain
             return this.segurancaRepository.Login(userWeb);
         }
 
-        public string Authenticate(Authenticate dto)
+        public Authenticate.Response Authenticate(Authenticate.Request dto)
         {
-            
+
             //Recupera o usuário
             var usuarioModel = this.ConsultaUsuario(new EFTJUserweb()
             {
                 Login = dto.Login
             });
 
-            if(usuarioModel == null)
+            if (usuarioModel == null)
             {
                 usuarioModel = this.ConsultaUsuario(new EFTJUserweb()
                 {
@@ -62,7 +61,7 @@ namespace SGDAU.Seguranca.Domain
             if (usuarioModel == null)
                 return null;
 
-            var password =  String.Join("", System.Security.Cryptography.SHA1.Create().ComputeHash(
+            var password = String.Join("", System.Security.Cryptography.SHA1.Create().ComputeHash(
                                 Encoding.UTF8.GetBytes(
                                     String.Concat(usuarioModel.pwdKey, dto.Password)
                                 )
@@ -114,8 +113,12 @@ namespace SGDAU.Seguranca.Domain
                 Expires = DateTime.UtcNow.AddHours(8),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-            
-            return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+
+            return new Authenticate.Response()
+            {
+                UserData = jwtData,
+                Token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor))
+            };
         }
     }
 }
