@@ -24,10 +24,12 @@ namespace SGDAU.Unidade.Domain
     public class UnidadeService : IUnidadeService
     {
         private readonly IUnidadeRepository unidadeRepository;
+        private readonly IContextIronMountain context;
 
-        public UnidadeService(IUnidadeRepository unidadeRepository)
+        public UnidadeService(IContextIronMountain context, IUnidadeRepository unidadeRepository)
         {
             this.unidadeRepository = unidadeRepository;
+            this.context = context;
         }
 
         public ICollection<EFTJPredio> AdicionarPredioUnidade(IDatabaseCommandCommit databaseCommandCommit, EFTJPredio predio)

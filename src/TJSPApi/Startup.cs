@@ -20,6 +20,7 @@ using SGDAU.Unidade.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SGDAU.Seguranca.Domain;
+using Microsoft.AspNetCore.Http;
 
 namespace TJSPApi
 {
@@ -40,13 +41,12 @@ namespace TJSPApi
             services.AddMemoryCache();
             services.AddControllers();
             services.AddSingleton<IConfiguration>(this.Configuration);
-            services.AddScoped<IDatabaseCommandCommit, DatabaseCommandCommit>();
-            services.AddScoped<ISegurancaRepository, SegurancaRepository>();
-            services.AddScoped<ISegurancaService, SegurancaService>();
 
             var audiences = this.Configuration.GetSection("Authentication:Audiences").Get<string[]>();
+            if (audiences == null)
+                audiences = new string[0];
             var key = Encoding.ASCII.GetBytes(this.Configuration.GetSection("Authentication:SecretKey").Value);
-            
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -65,17 +65,15 @@ namespace TJSPApi
                     ValidAudiences = audiences
                 };
             });
-
-            //services.AddScoped<IUnidadeRepository, UnidadeRepository>();
-            //services.AddScoped<IUnidadeService, UnidadeService>();
-            //services.AddScoped<IUnidadeQuery, UnidadeQuery>();
-
-            //services.AddScoped<IAdvogadoRepository, AdvogadoRepository>();
-            //services.AddScoped<IAdvogadoService, AdvogadoService>();
-            //services.AddScoped<IAdvogadoQuery, AdvogadoQuery>();
-
-            //this.QueryPartTypesToRegister.Add(typeof(IAdvogadoQuery));
-            //this.QueryPartTypesToRegister.Add(typeof(IUnidadeQuery));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IDatabaseCommandCommit, DatabaseCommandCommit>();
+            services.AddScoped<ISegurancaRepository, SegurancaRepository>();
+            services.AddScoped<ISegurancaService, SegurancaService>();
+            services.AddScoped<IContextIronMountain>(provider =>
+                new ContextIronMountain(
+                    provider.GetService<IHttpContextAccessor>().HttpContext.User
+                )
+            );
 
             foreach ( string assemblyName in GetAssemblies() )
             {

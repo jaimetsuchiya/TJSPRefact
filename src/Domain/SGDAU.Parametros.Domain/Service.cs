@@ -1,4 +1,5 @@
-﻿using SGDAU.Parametros.Domain.Models;
+﻿using SGDAU.Common;
+using SGDAU.Parametros.Domain.Models;
 using SGDAU.Repository.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -35,10 +36,12 @@ namespace SGDAU.Parametros.Domain
 	public class ParametroAplicacaoService : IParametroAplicacaoService
 	{
 		private readonly IParametroAplicacaoRepository parametroAplicacaoRepository;
+		private readonly IContextIronMountain context;
 
-		public ParametroAplicacaoService(IParametroAplicacaoRepository parametroAplicacaoRepository)
+		public ParametroAplicacaoService(IContextIronMountain context, IParametroAplicacaoRepository parametroAplicacaoRepository)
 		{
 			this.parametroAplicacaoRepository = parametroAplicacaoRepository;
+			this.context = context;
 		}
 
 

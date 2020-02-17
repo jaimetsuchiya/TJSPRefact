@@ -22,9 +22,12 @@ namespace SGDAU.Advogado.Domain
     public class AdvogadoService : IAdvogadoService
     {
         private readonly IAdvogadoRepository advogadoRepository;
-        public AdvogadoService(IAdvogadoRepository advogadoRepository)
+        private readonly IContextIronMountain context;
+
+        public AdvogadoService(IContextIronMountain context, IAdvogadoRepository advogadoRepository)
         {
             this.advogadoRepository = advogadoRepository;
+            this.context = context;
         }
         public bool Alterar(IDatabaseCommandCommit dataBaseCommandCommit, EFTJAdvogado advogado)
         {

@@ -23,11 +23,13 @@ namespace SGDAU.Seguranca.Domain
     {
         private readonly ISegurancaRepository segurancaRepository;
         private readonly IConfiguration configurationService;
+        private readonly IContextIronMountain context;
 
-        public SegurancaService(IConfiguration configurationService, ISegurancaRepository segurancaRepository)
+        public SegurancaService(IContextIronMountain context, IConfiguration configurationService, ISegurancaRepository segurancaRepository)
         {
             this.configurationService = configurationService;
             this.segurancaRepository = segurancaRepository;
+            this.context = context;
         }
 
         public EFTJUserweb ConsultaUsuario(EFTJUserweb userWeb)
