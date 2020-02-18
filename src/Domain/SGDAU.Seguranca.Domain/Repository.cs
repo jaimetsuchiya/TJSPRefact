@@ -15,10 +15,12 @@ namespace SGDAU.Seguranca.Domain
 
     }
 
-    public class SegurancaRepository : DatabaseQueryCommand, ISegurancaRepository
+    public class SegurancaRepository : ISegurancaRepository
     {
-        public SegurancaRepository(IConfiguration config) : base(config)
+        private readonly IDatabaseQueryCommand databaseQueryCommand;
+        public SegurancaRepository(IDatabaseQueryCommand databaseQueryCommand)
         {
+            this.databaseQueryCommand = databaseQueryCommand;
         }
 
         public string Procedure
@@ -37,7 +39,7 @@ namespace SGDAU.Seguranca.Domain
             parameters.Add(new SqlParameter("@veLogin", userWeb.Login));
             parameters.Add(new SqlParameter("@veToken", userWeb.Token));
 
-            return base.GetEntity<EFTJUserweb>(Procedure, parameters);
+            return this.databaseQueryCommand.GetEntity<EFTJUserweb>(Procedure, parameters);
         }
 
         public EFTJUserweb Login(EFTJUserweb userWeb)
@@ -48,7 +50,7 @@ namespace SGDAU.Seguranca.Domain
             parameters.Add(new SqlParameter("@veLogin", userWeb.Login));
             parameters.Add(new SqlParameter("@vePassWord", userWeb.PassWord));
 
-            return base.GetEntity<EFTJUserweb>(Procedure, parameters);
+            return this.databaseQueryCommand.GetEntity<EFTJUserweb>(Procedure, parameters);
         }
 
     }

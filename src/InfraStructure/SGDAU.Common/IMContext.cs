@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
@@ -13,8 +14,10 @@ namespace SGDAU.Common
     }
 
     public class ContextIronMountain: IContextIronMountain
-    { 
-        public ContextIronMountain(ClaimsPrincipal principal)
+    {
+        private readonly IConfiguration config;
+
+        public ContextIronMountain(IConfiguration config, ClaimsPrincipal principal)
         {
             if (principal != null && principal.Identity != null && principal.Identity.IsAuthenticated && principal.Claims != null )
             {
@@ -32,7 +35,6 @@ namespace SGDAU.Common
                             this.UserData = data;
                             break;
 
-
                         default:
                             break;
                     }
@@ -44,5 +46,4 @@ namespace SGDAU.Common
         public bool IsValid { get; private set; } = false;
         public string Name { get; private set; }
     }
-
 }

@@ -8,12 +8,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace SGDAU.Repository.Infrastructure
 {
-    public class DatabaseCommand<T> where T : class
+    public class DatabaseCommand<T> : IDatabaseCommand<T> where T : class
     {
         private DatabaseQueryCommand cmd = null;
-        public DatabaseCommand(IConfiguration config)
+        public DatabaseCommand(IDbConnection connection)
         {
-            cmd = new DatabaseQueryCommand(config);
+            cmd = new DatabaseQueryCommand(connection);
         }
 
         public virtual ICollection<T> Select(string procedure, List<SqlParameter> parameters = null)
@@ -27,18 +27,18 @@ namespace SGDAU.Repository.Infrastructure
         }
     }
 
-    public class DatabaseQueryCommand
+    public class DatabaseQueryCommand : IDatabaseQueryCommand
     {
-        private string connectionString = "";
+        private SqlConnection connection;
 
-        public DatabaseQueryCommand(IConfiguration config) 
-        { 
-            this.connectionString = config.GetSection("ConnectionStrings:REFIConnectionString").Value;
+        public DatabaseQueryCommand(IDbConnection connection)
+        {
+            this.connection = (SqlConnection)connection;
         }
 
         private SqlConnection GetConnection()
         {
-            return new SqlConnection(connectionString);
+            return connection;
         }
 
         public virtual ICollection<T> Select<T>(string procedure, List<SqlParameter> parameters = null)

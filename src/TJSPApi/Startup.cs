@@ -21,6 +21,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SGDAU.Seguranca.Domain;
 using Microsoft.AspNetCore.Http;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace TJSPApi
 {
@@ -66,11 +68,16 @@ namespace TJSPApi
                 };
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IDbConnection>(provider =>
+                (IDbConnection)new SqlConnection(Configuration.GetSection("ConnectionStrings:REFIConnectionString").Value)
+            );
+            services.AddScoped<IDatabaseQueryCommand, DatabaseQueryCommand>();
             services.AddScoped<IDatabaseCommandCommit, DatabaseCommandCommit>();
             services.AddScoped<ISegurancaRepository, SegurancaRepository>();
             services.AddScoped<ISegurancaService, SegurancaService>();
             services.AddScoped<IContextIronMountain>(provider =>
                 new ContextIronMountain(
+                    this.Configuration,
                     provider.GetService<IHttpContextAccessor>().HttpContext.User
                 )
             );
@@ -100,7 +107,7 @@ namespace TJSPApi
         {
             var result = new List<string>();
             var path = AppDomain.CurrentDomain.BaseDirectory;
-            var exclusion = new string[] { "Seguranca", "Parametros" };
+            var exclusion = this.Configuration.GetSection("GraphQL:ExclusionDomainList").Get<string[]>();
             var files = new DirectoryInfo(path).GetFiles("SGDAU.*.Domain.dll");
             if( files != null && files.Length > 0 )
             {

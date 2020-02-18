@@ -23,10 +23,12 @@ namespace SGDAU.Advogado.Domain
         ICollection<EFTJAdvogado> PesquisarHistoricoAdvogado(EFTJAdvogado advogado);
     }
 
-    public class AdvogadoRepository : DatabaseQueryCommand, IAdvogadoRepository
+    public class AdvogadoRepository : IAdvogadoRepository
     {
-        public AdvogadoRepository(IConfiguration config) : base(config)
+        private readonly IDatabaseQueryCommand databaseQueryCommand;
+        public AdvogadoRepository(IDatabaseQueryCommand databaseQueryCommand)
         {
+            this.databaseQueryCommand = databaseQueryCommand;
         }
 
 
@@ -59,7 +61,7 @@ namespace SGDAU.Advogado.Domain
             if (pageFinish > 0)
                 parameters.Add(new SqlParameter("@vePageFinish", pageFinish));
 
-            return base.Select<EFTJAdvogado>(Procedure, parameters);
+            return this.databaseQueryCommand.Select<EFTJAdvogado>(Procedure, parameters);
         }
 
         public int Inserir(IDatabaseCommandCommit databaseCommandCommit, EFTJAdvogado advogado)
@@ -120,7 +122,7 @@ namespace SGDAU.Advogado.Domain
             parameters.Add(new SqlParameter("@vePaginaAtual", advogado.pagina));
             parameters.Add(new SqlParameter("@veQuantidadeRegistros", advogado.QuantidadeRegistrosPorPagina));
 
-            return base.Select<EFTJAdvogado>(Procedure, parameters);
+            return this.databaseQueryCommand.Select<EFTJAdvogado>(Procedure, parameters);
         }
 
         public bool Incluir(IDatabaseCommandCommit dataBaseCommandCommit, EFTJAdvogado advogado)
@@ -180,7 +182,7 @@ namespace SGDAU.Advogado.Domain
             if (advogado.EFTJAdvogadoID > 0)
                 parameters.Add(new SqlParameter("@veEFTJAdvogadoID", advogado.EFTJAdvogadoID));
 
-            return base.Select<EFTJAdvogado>(Procedure, parameters);
+            return this.databaseQueryCommand.Select<EFTJAdvogado>(Procedure, parameters);
         }
 
         public ICollection<EFTJAdvogado> PesquisarRelatorio(EFTJAdvogado advogado)
@@ -205,7 +207,7 @@ namespace SGDAU.Advogado.Domain
             parameters.Add(new SqlParameter("@vePaginaAtual", advogado.pagina));
             parameters.Add(new SqlParameter("@veQuantidadeRegistros", advogado.QuantidadeRegistrosPorPagina));
 
-            return base.Select<EFTJAdvogado>(Procedure, parameters);
+            return this.databaseQueryCommand.Select<EFTJAdvogado>(Procedure, parameters);
         }
     }
 }

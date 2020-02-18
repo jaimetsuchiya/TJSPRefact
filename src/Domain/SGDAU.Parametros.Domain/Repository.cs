@@ -33,12 +33,14 @@ namespace SGDAU.Parametros.Domain
     }
 
 
-	public class ParametroAplicacaoRepository : DatabaseCommand<EFConfig>, IParametroAplicacaoRepository
+	public class ParametroAplicacaoRepository : IParametroAplicacaoRepository
 	{
+		private readonly IDatabaseQueryCommand databaseQueryCommand;
 		public string Procedure { get { return "parametro_aplicacao_sgdai"; } }
 
-		public ParametroAplicacaoRepository(IConfiguration config) : base(config)
+		public ParametroAplicacaoRepository(IDatabaseQueryCommand databaseQueryCommand)
 		{
+			this.databaseQueryCommand = databaseQueryCommand;
 		}
 
 		/// <summary>
@@ -55,7 +57,7 @@ namespace SGDAU.Parametros.Domain
 			if (!string.IsNullOrEmpty(filtro.Description))
 				parameters.Add(new SqlParameter("@veDescription", filtro.Description));
 
-			return base.Select(this.Procedure, parameters);
+			return this.databaseQueryCommand.Select<EFConfig>(this.Procedure, parameters);
 		}
 
 
@@ -86,7 +88,7 @@ namespace SGDAU.Parametros.Domain
 			parameters.Add(new SqlParameter("@veParametro", 2));
 			parameters.Add(new SqlParameter("@veEFConfigID", efconfig.EFConfigID));
 
-			return base.GetEntity(this.Procedure, parameters);
+			return this.databaseQueryCommand.GetEntity<EFConfig>(this.Procedure, parameters);
 		}
 	}
 }
