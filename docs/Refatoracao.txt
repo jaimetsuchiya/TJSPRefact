@@ -78,6 +78,7 @@ https://medium.com/daily-now/using-onesignal-in-a-vue-cli-3-application-d06c9fb4
 SignalR + Vue
 https://forum.vuejs.org/t/pub-sub-with-signalr-and-vue-native-vue-plugin/58044
 
+
 Componentes
 * Header.vue
 * Footer.vue
@@ -92,3 +93,14 @@ Módulos
 	* Coleta
 	
 
+Serviços necessários:
+* Cadastro
+* Temporalidade
+* Inventario
+* Historico
+* Desarquivamento
+* Carrinho
+* OrdemServico
+* Coleta
+* Seguranca
+* Usuario
