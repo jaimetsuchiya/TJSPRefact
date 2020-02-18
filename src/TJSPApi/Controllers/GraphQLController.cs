@@ -43,9 +43,12 @@ namespace TJSPApi.Controllers
                     var queryPart = this._serviceProvider.GetService(part);
                     queryPart.GetType().InvokeMember("SetQueries", BindingFlags.InvokeMethod, null, queryPart, new object[] { querySchema });
                 }
-                this._memoryCache.Set("Schema", 
-                                      querySchema, 
-                                      new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(60)));
+                this._memoryCache.CreateEntry("Schema")
+                    .SetValue(querySchema)
+                    .AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(60);
+                //this._memoryCache.Set("Schema", 
+                //                      , 
+                //                      new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(60)));
             }
             return querySchema;
         }

@@ -14,4 +14,14 @@
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\SGDAU.Advogado.Domain\SGDAU.Advogado.Domain.csproj" />
+    <ProjectReference Include="..\..\Domain\SGDAU.Parametros.Domain\SGDAU.Parametros.Domain.csproj" />
+    <ProjectReference Include="..\..\Domain\SGDAU.Seguranca.Domain\SGDAU.Seguranca.Domain.csproj" />
+    <ProjectReference Include="..\..\Domain\SGDAU.Unidade.Domain\SGDAU.Unidade.Domain.csproj" />
+    <ProjectReference Include="..\..\InfraStructure\SGDAU.Common\SGDAU.Common.csproj" />
+    <ProjectReference Include="..\..\InfraStructure\SGDAU.Repository.Infrastructure\SGDAU.Repository.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\TJSPApi\TJSPApi.csproj" />
+  </ItemGroup>
+
 </Project>
