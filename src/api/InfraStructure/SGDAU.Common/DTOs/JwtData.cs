@@ -8,8 +8,7 @@ namespace SGDAU.Common
     public class JwtData
     {
         public string Login { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
         public int UserID { get; set; }
         public int? GroupID { get; set; }
         public int? CategoryID { get; set; }

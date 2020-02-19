@@ -1,19 +1,29 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header version="SW1 - 3.5.4.4" user="userData"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+
+var data = {
+  userData: {
+        login: "GSWTJ4126",
+        name: "JAIME TSUCHIYA"
+  }
+};
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Header
+  },
+  data: function() {
+    return data;
+  },
 }
+
 </script>
 
 <style>

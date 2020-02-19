@@ -82,7 +82,7 @@ namespace SGDAU.Seguranca.Domain
                 RegionID = usuarioModel.EFRegiaoID,
                 GroupID = usuarioModel.EFGrupoID,
                 CategoryID = usuarioModel.Categoria,
-                FirstName = usuarioModel.Nome,
+                Name = usuarioModel.Nome,
                 Login = dto.Login,
                 UserID = usuarioModel.EFUserID,
                 ClientID = dto.ClientId
