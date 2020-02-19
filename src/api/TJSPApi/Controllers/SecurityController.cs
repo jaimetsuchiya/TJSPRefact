@@ -22,9 +22,11 @@ namespace TJSPApi.Controllers
     {
         private readonly ISegurancaService segurancaService;
         private readonly IConfiguration configurationService;
+        private readonly IContextIronMountain imContext;
 
-        public SecurityController(IConfiguration configurationService, ISegurancaService segurancaService)
+        public SecurityController(IContextIronMountain imContext, IConfiguration configurationService, ISegurancaService segurancaService)
         {
+            this.imContext = imContext;
             this.segurancaService = segurancaService;
             this.configurationService = configurationService;
         }
@@ -62,6 +64,37 @@ namespace TJSPApi.Controllers
         {
             var user = HttpContext.User.Claims.Select(x => x.Value);
             return Ok(user);
+        }
+
+
+        [HttpGet("checkURLPermission")]
+        [Authorize]
+        public async Task<IActionResult> CheckURLPermission(string url)
+        {
+            if( this.imContext.IsValid &&
+                this.imContext.UserData.AccessPermissions.Any(x=> !string.IsNullOrEmpty(x.URL)
+                                                                && !string.IsNullOrEmpty(url)
+                                                                && x.URL.Trim().ToLower() == url.Trim().ToLower()))
+            {
+                return Ok();
+            }
+            else
+                return Unauthorized();
+        }
+
+        [HttpGet("checkTransactionPermission")]
+        [Authorize]
+        public async Task<IActionResult> CheckTransactionPermission(string transactionName)
+        {
+            if (this.imContext.IsValid &&
+                this.imContext.UserData.AccessPermissions.Any(x => !string.IsNullOrEmpty(x.TransactionName)
+                                                                && !string.IsNullOrEmpty(transactionName)
+                                                                && x.TransactionName.Trim().ToLower() == transactionName.Trim().ToLower()))
+            {
+                return Ok();
+            }
+            else
+                return Unauthorized();
         }
     }
 }

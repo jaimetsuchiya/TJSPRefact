@@ -18,5 +18,15 @@ namespace SGDAU.Common
         public decimal? AllocatedVaraID { get; set; }
         public string ClientID { get; set; }
         public string Hash { get; set; }
+        public AccessDTO[] AccessPermissions { get; set; }
     }
+
+    public class AccessDTO
+    { 
+        public int ID { get; set; }
+        public string Descricao { get; set; }
+        public string URL { get; set; }
+        public string TransactionName { get; set; }
+    }
+
 }

@@ -850,10 +850,6 @@ body {
         font: bold 12px Arial, Helvetica, Sans-serif;
     }
 
-
-    #bs-example-navbar-collapse-1 {
-    }
-
     @-moz-document url-prefix() {
         #bs-example-navbar-collapse-1 {
             z-index: 999999;

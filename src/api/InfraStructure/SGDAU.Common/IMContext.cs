@@ -24,13 +24,13 @@ namespace SGDAU.Common
                 var data = new JwtData();
                 foreach(var claim in principal.Claims)
                 {
-                    switch (claim.Type.Trim())
+                    switch (claim.Type)
                     {
-                        case "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name":
+                        case ClaimTypes.Name:
                             this.Name = claim.Value;
                             break;
 
-                        case "http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata":
+                        case ClaimTypes.UserData:
                             data = Newtonsoft.Json.JsonConvert.DeserializeObject<JwtData>(claim.Value);
                             this.UserData = data;
                             break;

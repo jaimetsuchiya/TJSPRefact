@@ -14,7 +14,7 @@
 
       <FormTitle :title="title"></FormTitle>
       <div id="formContent">
-        <Login />
+        <home />
       </div>
 
     </section>
@@ -27,13 +27,13 @@
 <script>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-import Login from './components/Login.vue'
+import Home from './components/Home.vue'
 import FormTitle from './components/FormTitle.vue'
 
 var data = {
   userData: {
-    login: undefined,
-    name: undefined
+    login: 'GSWTJ4126',
+    name: 'JAIME TSUCHIYA'
   },
   token: {
     
@@ -46,7 +46,7 @@ export default {
   components: {
     Header,
     Footer,
-    Login,
+    Home,
     FormTitle
   },
   data: function() {

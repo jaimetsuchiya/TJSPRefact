@@ -1,25 +1,29 @@
 <template>
 <header class="header">
-<b-row class="top img-responsive hidden-sm hidden-xs">
-  <b-col col lg="4" md="4" class="text-left">
-    <a v-if="isAuthenticated" v-on:click="logOff()" class="link-menu-header text-bold">Sair</a>
-        <span v-if="isAuthenticated" class="text-bold"> | </span> 
-        <a v-if="isAuthenticated" v-on:click="changePwd()" class="link-menu-header text-bold">Alterar Senha</a>
-  </b-col>
-  <b-col col lg="4" md="4" class="text=center">
-      <span v-if="isAuthenticated" class="text-blue text-size-9 text-bold" >
-            {{user.login}} - {{ user.name }}
+  <b-row class="top img-responsive hidden-sm hidden-xs">
+    <b-col col lg="4" md="4" class="text-left">
+      <a v-if="isAuthenticated" v-on:click="logOff()" class="link-menu-header text-bold">Sair</a>
+          <span v-if="isAuthenticated" class="text-bold"> | </span> 
+          <a v-if="isAuthenticated" v-on:click="changePwd()" class="link-menu-header text-bold">Alterar Senha</a>
+    </b-col>
+    <b-col col lg="4" md="4" class="text=center">
+        <span v-if="isAuthenticated" class="text-blue text-size-9 text-bold" >
+              {{user.login}} - {{ user.name }}
+        </span>
+    </b-col>
+    <b-col col lg="4" md="4" class="text=center">
+      <span v-if="isAuthenticated" class="text-size-8 text-blue" >
+              {{ version }}
       </span>
-  </b-col>
-  <b-col col lg="4" md="4" class="text=center">
-    <span v-if="isAuthenticated" class="text-size-8 text-blue" >
-            {{ version }}
-    </span>
-  </b-col>
-</b-row>  
-<nav v-if="isAuthenticated" class="navbar navbar-default navbar-default-menu navigationArea">
-  <Menu/>
-</nav>
+    </b-col>
+  </b-row>  
+  <b-row v-if="isAuthenticated" >
+    <b-col col lg="10">
+      <nav class="navbar navbar-default navbar-default-menu">
+        <Menu />
+      </nav>
+    </b-col>
+  </b-row>
 </header>
 </template>
 
