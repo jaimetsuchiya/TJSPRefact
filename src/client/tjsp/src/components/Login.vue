@@ -16,13 +16,13 @@
         </b-col>
         <b-col col lg="6" md="6" class="m-t-20">
             <p class="text-color-red text-size-12 text-bold">Informe os dados para acesso</p>
-            <form id="frmLogin">
+            <form id="frmLogin" >
                 <b-row class="form-group">
                     <b-col col lg="4" md="6" class="text-bold text-left-sm text-left-xs text-right m-r-5">
                         Login ou CPF:
                     </b-col>
                     <b-col col lg="7" md="5">
-                        <input type="text" class="campo_comum" autocomplete="off" maxlength="20" />
+                        <input type="text" id="login" v-model="authenticationRequest.login" class="campo_comum" autocomplete="off" maxlength="20" />
                     </b-col>
                 </b-row>
                 <b-row class="form-group">
@@ -30,12 +30,14 @@
                         Senha:
                     </b-col>
                     <b-col col lg="7" md="5" >
-                        <input type="password" class="campo_comum" autocomplete="off" maxlength="20" />
+                        <input type="password" v-model="authenticationRequest.password" class="campo_comum" autocomplete="off" maxlength="20" />
                     </b-col>
                 </b-row>
                 <b-row class="form-group">
                     <b-col>
-                        <span class="validate-msg-error"></span>
+                        <span class="validate-msg-error">
+                            {{authenticationResponse.message}}
+                        </span>
                     </b-col>
                 </b-row>
                 <b-row class="form-group">
@@ -50,10 +52,34 @@
 </template>
 <script>
 
+var data = {
+  authenticationRequest: {
+    login: '',
+    password: '',
+    clientId: 'b5efeeaf2d46854a78cbe4a3ca50ad6b'
+  },
+  authenticationResponse: {
+      message: '',
+      userData: null,
+      token: null
+  }
+};
+
 export default {
     name: 'Login',
-    components: {
-        
+    data: function() {
+        return data;
+    },
+    methods: {
+        requestSignIn: function() {
+
+        },
+        requestSignOut: function() {
+
+        }
+    },
+    mounted() {
+        document.getElementById('login').focus();
     }
 }
 

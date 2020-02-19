@@ -14,7 +14,7 @@
 
       <FormTitle :title="title"></FormTitle>
       <div id="formContent">
-        <Login/>
+        <Login />
       </div>
 
     </section>
@@ -52,6 +52,15 @@ export default {
   data: function() {
     return data;
   },
+  methods: {
+    signIn: function() {
+
+    }, 
+    signOut: function() {
+
+    }
+  },
+
 }
 </script>
 
