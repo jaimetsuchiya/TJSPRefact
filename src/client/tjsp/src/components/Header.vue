@@ -18,7 +18,7 @@
     </b-col>
   </b-row>  
   <b-row v-if="isAuthenticated" >
-    <b-col col lg="10">
+    <b-col col lg="10" >
       <nav class="navbar navbar-default navbar-default-menu">
         <Menu />
       </nav>
