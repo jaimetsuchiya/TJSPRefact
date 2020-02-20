@@ -87,9 +87,9 @@ namespace TJSPApi.Controllers
         public async Task<IActionResult> CheckTransactionPermission(string transactionName)
         {
             if (this.imContext.IsValid &&
-                this.imContext.UserData.AccessPermissions.Any(x => !string.IsNullOrEmpty(x.TransactionName)
+                this.imContext.UserData.AccessPermissions.Any(x => !string.IsNullOrEmpty(x.URL)
                                                                 && !string.IsNullOrEmpty(transactionName)
-                                                                && x.TransactionName.Trim().ToLower() == transactionName.Trim().ToLower()))
+                                                                && x.URL.Trim().ToLower() == transactionName.Trim().ToLower()))
             {
                 return Ok();
             }

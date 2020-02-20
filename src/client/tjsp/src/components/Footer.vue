@@ -1,5 +1,5 @@
 <template>
-<footer class="footer-page">
+<div class="footer-page">
     <b-row>
         <b-col col lg="8" md="8" class="text-left">
         </b-col>
@@ -8,7 +8,7 @@
             <p><span class="text-size-7 pull-right p-r-5">Server: {{server}}</span></p>
         </b-col>
     </b-row>
-</footer>  
+</div>  
 </template>
 
 <script>

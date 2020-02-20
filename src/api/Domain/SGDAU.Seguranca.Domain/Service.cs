@@ -43,7 +43,6 @@ namespace SGDAU.Seguranca.Domain
 
         public Authenticate.Response Authenticate(Authenticate.Request dto)
         {
-
             //Recupera o usuário
             var usuarioModel = this.ConsultaUsuario(new EFTJUserweb()
             {
@@ -88,14 +87,16 @@ namespace SGDAU.Seguranca.Domain
                 ClientID = dto.ClientId
             };
 
-            //Calcula o hash de validação com os dados do usuário
-            var hash = String.Join("", System.Security.Cryptography.SHA256.Create().ComputeHash(
-                                Encoding.UTF8.GetBytes(
-                                    String.Concat(this.configurationService.GetSection("Authentication:Seed").Value, Newtonsoft.Json.JsonConvert.SerializeObject(jwtData), this.configurationService.GetSection("Authentication:Sufix").Value)
-                                )
-                            ).Select(x => x.ToString("X2"))).ToLower();
+            //Retrieve Access (Menu's)
+            //jwtData.AccessPermissions = this.segurancaRepository.GetUserAccess(new EFTJUserweb() { Login = dto.Login}).Select(x => new AccessDTO() { 
+            //                                Description = x.Description,
+            //                                URL = x.URL,
+            //                                ID = x.EFMenuID,
+            //                                ParentID = x.EFMenuID2
+            //                            }).ToArray();
 
-            jwtData.Hash = hash;
+            //Calcula o hash de validação com os dados do usuário
+            jwtData.Hash = JwtData.CalculateHash(this.configurationService, jwtData);
 
             //Gera o token JWT
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -113,6 +114,9 @@ namespace SGDAU.Seguranca.Domain
                 Expires = DateTime.UtcNow.AddHours(8),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+
+            ////Limpa a lista de Acessos do UserData
+            //jwtData.AccessPermissions = new AccessDTO[0];
 
             return new Authenticate.Response()
             {

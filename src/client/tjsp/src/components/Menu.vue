@@ -1,5 +1,4 @@
 <template>
-<div id="menu">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -416,7 +415,6 @@
             </ul>
         </div>
     </div>
-</div>
 </template>    
 
 <script>

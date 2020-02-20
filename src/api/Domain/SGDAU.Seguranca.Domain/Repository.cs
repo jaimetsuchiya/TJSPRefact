@@ -12,7 +12,7 @@ namespace SGDAU.Seguranca.Domain
     {
         EFTJUserweb ConsultaUsuario(EFTJUserweb userWeb);
         EFTJUserweb Login(EFTJUserweb userWeb);
-
+        ICollection<EFTJMenu> GetUserAccess(EFTJUserweb userWeb);
     }
 
     public class SegurancaRepository : ISegurancaRepository
@@ -53,5 +53,11 @@ namespace SGDAU.Seguranca.Domain
             return this.databaseQueryCommand.GetEntity<EFTJUserweb>(Procedure, parameters);
         }
 
+        public ICollection<EFTJMenu> GetUserAccess(EFTJUserweb userWeb)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@veCreateUserCode", userWeb.Login));
+            return this.databaseQueryCommand.Select<EFTJMenu>("menu2_sgdai", parameters);
+        }
     }
 }

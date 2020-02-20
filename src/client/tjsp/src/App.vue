@@ -3,7 +3,7 @@
 
     <Header version="SW1 - 3.5.4.4" :user="userData"/>
 
-    <section class="content-page">
+    <div class="content-page">
 
       <div id="progressbar-man" style="display: none;" class="ajaxloader-2">
           <center>
@@ -17,7 +17,7 @@
         <home />
       </div>
 
-    </section>
+    </div>
 
     <Footer server="BRSPOMTJSD01" />
 

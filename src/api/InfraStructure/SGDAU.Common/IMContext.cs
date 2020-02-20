@@ -21,7 +21,6 @@ namespace SGDAU.Common
         {
             if (principal != null && principal.Identity != null && principal.Identity.IsAuthenticated && principal.Claims != null )
             {
-                var data = new JwtData();
                 foreach(var claim in principal.Claims)
                 {
                     switch (claim.Type)
@@ -31,8 +30,9 @@ namespace SGDAU.Common
                             break;
 
                         case ClaimTypes.UserData:
-                            data = Newtonsoft.Json.JsonConvert.DeserializeObject<JwtData>(claim.Value);
+                            var data = Newtonsoft.Json.JsonConvert.DeserializeObject<JwtData>(claim.Value);
                             this.UserData = data;
+                            this.IsValid = data.Hash == JwtData.CalculateHash(this.config, data);
                             break;
 
                         default:

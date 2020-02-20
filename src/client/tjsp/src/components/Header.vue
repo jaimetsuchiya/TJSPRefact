@@ -1,5 +1,5 @@
 <template>
-<header class="header">
+<div class="header">
   <b-row class="top img-responsive hidden-sm hidden-xs">
     <b-col col lg="4" md="4" class="text-left">
       <a v-if="isAuthenticated" v-on:click="logOff()" class="link-menu-header text-bold">Sair</a>
@@ -24,7 +24,7 @@
       </nav>
     </b-col>
   </b-row>
-</header>
+</div>
 </template>
 
 <script>
