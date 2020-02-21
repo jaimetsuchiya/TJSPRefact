@@ -18,7 +18,6 @@ export default {
 </script>
 <style scoped>
     .formTitle {
-        width: 900px;
         margin-left: auto;
         margin-right: auto;
         margin-top: 0px;

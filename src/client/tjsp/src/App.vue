@@ -14,7 +14,7 @@
 
       <FormTitle :title="title"></FormTitle>
       <div id="formContent">
-        <home />
+
       </div>
 
     </div>
@@ -25,15 +25,15 @@
 </template>
 
 <script>
-import Header from './components/Header.vue'
+
 import Footer from './components/Footer.vue'
-import Home from './components/Home.vue'
 import FormTitle from './components/FormTitle.vue'
+import Header from './components/Header.vue'
 
 var data = {
   userData: {
-    login: 'GSWTJ4126',
-    name: 'JAIME TSUCHIYA'
+    login: undefined,
+    name: undefined
   },
   token: {
     
@@ -44,23 +44,27 @@ var data = {
 export default {
   name: 'App',
   components: {
-    Header,
     Footer,
-    Home,
-    FormTitle
+    FormTitle,
+    Header,
   },
   data: function() {
     return data;
   },
   methods: {
     signIn: function() {
-
     }, 
     signOut: function() {
-
     }
   },
-
+  mounted() {
+    var userInfo = localStorage.getItem("userInfo");
+    console.log('mounted.userInfoStr', userInfo);
+    if( userInfo != undefined ) {
+      var obj = JSON.parse(userInfo);
+      this.userData = obj.data.userData;
+    }
+  }
 }
 </script>
 

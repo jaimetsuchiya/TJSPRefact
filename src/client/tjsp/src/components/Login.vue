@@ -42,7 +42,7 @@
                 </b-row>
                 <b-row class="form-group">
                     <b-col class="text-center">
-                        <input id="btnLogin" type="button" class="button120" value="Login" />
+                        <input id="btnLogin" type="button" class="button120" value="Login" v-on:click="requestSignIn(authenticationRequest)"/>
                     </b-col>
                 </b-row>
             </form>
@@ -64,6 +64,11 @@ var data = {
       token: null
   }
 };
+import routes from '../routes';
+import * as axios from 'axios';
+axios.defaults.headers.common['Content-Type'] = 'application/json'
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'https://localhost:44306/api';
+axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
 
 export default {
     name: 'Login',
@@ -71,11 +76,18 @@ export default {
         return data;
     },
     methods: {
-        requestSignIn: function() {
-
+        requestSignIn: function(dto) {
+            axios.post('https://localhost:44306/api/security/Authenticate', dto)
+            .then(res=> {
+                            localStorage.setItem("userInfo", JSON.stringify(res));
+                            routes.push('/');
+                        }).catch(err => {
+                            localStorage.removeItem("userInfo");
+                            console.log('requestSignIn Error:', err);
+                        });
         },
         requestSignOut: function() {
-
+            localStorage.removeItem("userInfo");
         }
     },
     mounted() {

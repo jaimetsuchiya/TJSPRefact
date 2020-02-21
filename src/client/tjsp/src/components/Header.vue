@@ -17,7 +17,7 @@
       </span>
     </b-col>
   </b-row>  
-  <b-row v-if="isAuthenticated" >
+  <b-row v-if="isAuthenticated" class="menu-area">
     <b-col col lg="10" >
       <nav class="navbar navbar-default navbar-default-menu">
         <Menu />
@@ -58,7 +58,6 @@ export default {
 </script>
 <style scoped>
   .navigationArea {
-        width: 900px;
         margin-left: auto;
         margin-right: auto;
         margin-top: 0px;

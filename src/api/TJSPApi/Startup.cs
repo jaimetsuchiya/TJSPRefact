@@ -37,9 +37,23 @@ namespace TJSPApi
         }
 
         public IConfiguration Configuration { get; }
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.AllowAnyHeader()
+                     .AllowAnyMethod()
+                     .WithOrigins(this.Configuration.GetSection("Authentication:Audiences").Get<string[]>())
+                     .SetIsOriginAllowedToAllowWildcardSubdomains();
+                    builder.WithOrigins().SetIsOriginAllowedToAllowWildcardSubdomains(); 
+                });
+            });
+
             services.AddMemoryCache();
             services.AddControllers();
             services.AddSingleton<IConfiguration>(this.Configuration);
@@ -144,7 +158,17 @@ namespace TJSPApi
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            //app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .WithOrigins("http://localhost:8080",
+                                    "http://www.contoso.com",
+                                    "https://localhost:44375",
+                                    "https://localhost:8080")
+                       .SetIsOriginAllowedToAllowWildcardSubdomains();
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
