@@ -103,3 +103,9 @@ Serviços necessários:
 * Usuario
 
 https://github.com/johnpapa/vue-getting-started
+
+
+npm install vuex
+npm install loadash
+
+https://www.youtube.com/watch?v=Zu12uA6W80Q

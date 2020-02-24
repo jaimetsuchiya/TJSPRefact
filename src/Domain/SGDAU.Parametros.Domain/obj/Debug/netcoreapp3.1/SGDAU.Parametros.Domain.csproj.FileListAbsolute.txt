@@ -1,0 +1,13 @@
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\bin\Debug\netcoreapp3.1\SGDAU.Parametros.Domain.deps.json
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\bin\Debug\netcoreapp3.1\SGDAU.Parametros.Domain.dll
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\bin\Debug\netcoreapp3.1\SGDAU.Parametros.Domain.pdb
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\bin\Debug\netcoreapp3.1\SGDAU.Common.dll
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\bin\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.dll
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\bin\Debug\netcoreapp3.1\SGDAU.Common.pdb
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\bin\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.pdb
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\obj\Debug\netcoreapp3.1\SGDAU.Parametros.Domain.csprojAssemblyReference.cache
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\obj\Debug\netcoreapp3.1\SGDAU.Parametros.Domain.AssemblyInfoInputs.cache
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\obj\Debug\netcoreapp3.1\SGDAU.Parametros.Domain.AssemblyInfo.cs
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\obj\Debug\netcoreapp3.1\SGDAU.Parametros.Domain.csproj.CopyComplete
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\obj\Debug\netcoreapp3.1\SGDAU.Parametros.Domain.dll
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Parametros.Domain\obj\Debug\netcoreapp3.1\SGDAU.Parametros.Domain.pdb

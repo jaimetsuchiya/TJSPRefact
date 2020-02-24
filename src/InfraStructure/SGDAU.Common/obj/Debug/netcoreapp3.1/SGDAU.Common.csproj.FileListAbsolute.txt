@@ -1,0 +1,8 @@
+D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Common\bin\Debug\netcoreapp3.1\SGDAU.Common.deps.json
+D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Common\bin\Debug\netcoreapp3.1\SGDAU.Common.dll
+D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Common\bin\Debug\netcoreapp3.1\SGDAU.Common.pdb
+D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Common\obj\Debug\netcoreapp3.1\SGDAU.Common.csprojAssemblyReference.cache
+D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Common\obj\Debug\netcoreapp3.1\SGDAU.Common.AssemblyInfoInputs.cache
+D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Common\obj\Debug\netcoreapp3.1\SGDAU.Common.AssemblyInfo.cs
+D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Common\obj\Debug\netcoreapp3.1\SGDAU.Common.dll
+D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Common\obj\Debug\netcoreapp3.1\SGDAU.Common.pdb

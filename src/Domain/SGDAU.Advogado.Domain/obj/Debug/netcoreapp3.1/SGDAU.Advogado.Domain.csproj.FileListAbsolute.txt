@@ -1,0 +1,13 @@
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\bin\Debug\netcoreapp3.1\SGDAU.Advogado.Domain.deps.json
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\bin\Debug\netcoreapp3.1\SGDAU.Advogado.Domain.dll
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\bin\Debug\netcoreapp3.1\SGDAU.Advogado.Domain.pdb
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\bin\Debug\netcoreapp3.1\SGDAU.Common.dll
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\bin\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.dll
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\bin\Debug\netcoreapp3.1\SGDAU.Common.pdb
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\bin\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.pdb
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\obj\Debug\netcoreapp3.1\SGDAU.Advogado.Domain.csprojAssemblyReference.cache
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\obj\Debug\netcoreapp3.1\SGDAU.Advogado.Domain.AssemblyInfoInputs.cache
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\obj\Debug\netcoreapp3.1\SGDAU.Advogado.Domain.AssemblyInfo.cs
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\obj\Debug\netcoreapp3.1\SGDAU.Advogado.Domain.csproj.CopyComplete
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\obj\Debug\netcoreapp3.1\SGDAU.Advogado.Domain.dll
+D:\Lab\TJSPRefact\src\Domain\SGDAU.Advogado.Domain\obj\Debug\netcoreapp3.1\SGDAU.Advogado.Domain.pdb
