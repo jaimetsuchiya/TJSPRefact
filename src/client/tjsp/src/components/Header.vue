@@ -8,7 +8,7 @@
     </b-col>
     <b-col col lg="4" md="4" class="text=center">
         <span v-if="isAuthenticated" class="text-blue text-size-9 text-bold" >
-              {{user.login}} - {{ user.name }}
+              {{userLabel}}
         </span>
     </b-col>
     <b-col col lg="4" md="4" class="text=center">
@@ -29,6 +29,7 @@
 
 <script>
 import Menu from './Menu.vue'
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'Header',
@@ -36,23 +37,34 @@ export default {
     Menu
   },
   props: {
-    version: String,
-    user: Object
+    version: String
   },
   computed: {
+     ...mapState(['userInfo']),
     isAuthenticated: function () {
-      return this.user !== undefined && this.user.login !== undefined;
+      return this.userInfo !== undefined && this.userInfo !== null;
+    },
+    userLabel: function() {
+      if(this.isAuthenticated && this.userInfo !== null && this.userInfo !== undefined) {
+        return `${this.userInfo.login} - ${this.userInfo.name}`; 
+      } else {
+        return "";
+      }
     }
   },
   methods: {
+      ...mapActions(['signOut', 'loadUserInfo']),
       logOff() {
-        console.log('logOff');
-        this.user = undefined;
-        //TODO: Implementar emit
+        this.signOut();
+        this.$router.push({ path: '/login' });
+        this.loadUserInfo();
       },
       changePwd() {
-          console.log('changePwd');
+        console.log('changePwd');
       }
+  },
+  created() {
+      this.loadUserInfo();
   }
 }
 </script>

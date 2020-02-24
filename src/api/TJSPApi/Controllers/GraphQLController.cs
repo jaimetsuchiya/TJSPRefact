@@ -18,7 +18,7 @@ using TJSPApi.Infrastructure;
 namespace TJSPApi.Controllers
 {
     [Authorize]
-    [Route("graphql")]
+    [Route("api/graphql")]
     [ApiController]
     public class GraphQLController : ControllerBase
     {

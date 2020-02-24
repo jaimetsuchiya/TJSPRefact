@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <Header version="SW1 - 3.5.4.4" :user="userData"/>
+    <Header version="SW1 - 3.5.4.4" />
 
     <div class="content-page">
 
@@ -14,6 +14,7 @@
 
       <FormTitle :title="title"></FormTitle>
       <div id="formContent">
+        <router-view  default="{name: 'home'}"/>
 
       </div>
 
@@ -29,6 +30,7 @@
 import Footer from './components/Footer.vue'
 import FormTitle from './components/FormTitle.vue'
 import Header from './components/Header.vue'
+import { mapActions, mapState } from 'vuex';
 
 var data = {
   userData: {
@@ -51,19 +53,14 @@ export default {
   data: function() {
     return data;
   },
-  methods: {
-    signIn: function() {
-    }, 
-    signOut: function() {
-    }
+  computed: {
+      ...mapState(['userInfo']),
   },
-  mounted() {
-    var userInfo = localStorage.getItem("userInfo");
-    console.log('mounted.userInfoStr', userInfo);
-    if( userInfo != undefined ) {
-      var obj = JSON.parse(userInfo);
-      this.userData = obj.data.userData;
-    }
+  methods: {
+    ...mapActions(['loadUserInfo']),
+  },
+  created() {
+    this.loadUserInfo();
   }
 }
 </script>

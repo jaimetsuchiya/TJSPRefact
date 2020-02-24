@@ -43,8 +43,25 @@
 </b-row>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
     name: "Home",
+    computed: {
+        ...mapState(['userInfo']),
+    },
+    methods: {
+        ...mapActions(['loadUserInfo']),
+    },
+    mounted(){
+        if( this.userInfo === undefined ) {
+            console.log('userInfo', this.userInfo)
+            this.$router.push({ path: '/login' })
+        }
+    },
+    created() {
+         this.loadUserInfo();
+    }
 }
 </script>
 <style scoped>

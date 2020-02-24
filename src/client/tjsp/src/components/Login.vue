@@ -42,7 +42,7 @@
                 </b-row>
                 <b-row class="form-group">
                     <b-col class="text-center">
-                        <input id="btnLogin" type="button" class="button120" value="Login" v-on:click="requestSignIn(authenticationRequest)"/>
+                        <input id="btnLogin" type="button" class="button120" value="Login" v-on:click="logIn(authenticationRequest)"/>
                     </b-col>
                 </b-row>
             </form>
@@ -64,34 +64,27 @@ var data = {
       token: null
   }
 };
-import routes from '../routes';
-import * as axios from 'axios';
-axios.defaults.headers.common['Content-Type'] = 'application/json'
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'https://localhost:44306/api';
-axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
-
+// import { EventBus } from '../event-bus.js'; // check the path
+import { mapActions, mapState } from 'vuex';
+ 
 export default {
     name: 'Login',
     data: function() {
         return data;
     },
     methods: {
-        requestSignIn: function(dto) {
-            axios.post('https://localhost:44306/api/security/Authenticate', dto)
-            .then(res=> {
-                            localStorage.setItem("userInfo", JSON.stringify(res));
-                            routes.push('/');
-                        }).catch(err => {
-                            localStorage.removeItem("userInfo");
-                            console.log('requestSignIn Error:', err);
-                        });
-        },
-        requestSignOut: function() {
-            localStorage.removeItem("userInfo");
+        ...mapActions(['signIn']),
+        logIn: function(payload) {
+            
+            this.signIn(payload);
+            this.$router.push({ path: '/' })
         }
     },
     mounted() {
         document.getElementById('login').focus();
+    },
+    computed: {
+        ...mapState(['userInfo']),
     }
 }
 
