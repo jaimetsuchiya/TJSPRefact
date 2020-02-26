@@ -31,20 +31,18 @@ const mutations = {
 
     },
 
-    [DEL_USERINFO](state) {
-        state.userInfo = undefined;
-        state.token = undefined;
-    },
-
     [SET_USERINFO](state, userInfo) {
         state.userInfo = userInfo.userData;
         state.token = userInfo.token;
 
         localStorage.setItem(`${localStorageToken}`, state.token);
         localStorage.setItem(`${localStorageUserInfo}`, JSON.stringify( state.userInfo ));
-},
+    },
 
     [DEL_USERINFO](state) {
+
+        state.userInfo = undefined;
+        state.token = undefined;
         localStorage.removeItem(`${localStorageToken}`);
         localStorage.removeItem(`${localStorageUserInfo}`);
     }

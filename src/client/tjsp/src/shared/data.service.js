@@ -7,7 +7,7 @@ import { API } from './config';
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = `${API}`;
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorageToken}`;
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem(localStorageToken)}`;
 
 const signIn = async function(payload) {
 
@@ -28,6 +28,11 @@ const signIn = async function(payload) {
   const getEntity = async function(payload) {
 
     try {
+      var options = {
+            headers: {
+            'Authorization': `Bearer ${localStorage.getItem(localStorageToken)}`,
+          }
+      };
 
       const response = await axios.post(`${API}/graphql`, payload, options);
       var entityResult = parseItem(response, 200);
@@ -45,9 +50,14 @@ const signIn = async function(payload) {
 
     try {
 
-      const response = await axios.post(`${API}/graphql`, payload);
+      var options = {
+            headers: {
+            'Authorization': `Bearer ${localStorage.getItem(localStorageToken)}`,
+          }
+      };
+      const response = await axios.post(`${API}/graphql`, payload, options);
       var queryResult = parseList(response, 200);
-
+      console.log('queryResult', queryResult);
       return queryResult;
 
     } catch (error) {

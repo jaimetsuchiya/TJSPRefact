@@ -87,18 +87,11 @@ namespace SGDAU.Seguranca.Domain
                 ClientID = dto.ClientId
             };
 
-            //Retrieve Access (Menu's)
-            //jwtData.AccessPermissions = this.segurancaRepository.GetUserAccess(new EFTJUserweb() { Login = dto.Login}).Select(x => new AccessDTO() { 
-            //                                Description = x.Description,
-            //                                URL = x.URL,
-            //                                ID = x.EFMenuID,
-            //                                ParentID = x.EFMenuID2
-            //                            }).ToArray();
-
             //Calcula o hash de validação com os dados do usuário
             jwtData.Hash = JwtData.CalculateHash(this.configurationService, jwtData);
 
             //Gera o token JWT
+            var audience = dto.ClientId;
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(this.configurationService.GetSection("Authentication:SecretKey").Value);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -112,6 +105,7 @@ namespace SGDAU.Seguranca.Domain
                     new Claim(ClaimTypes.UserData, Newtonsoft.Json.JsonConvert.SerializeObject(jwtData))
                 }),
                 Expires = DateTime.UtcNow.AddHours(8),
+                Audience = audience,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

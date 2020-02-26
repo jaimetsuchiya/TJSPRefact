@@ -40,24 +40,51 @@
             <img src="../assets/images/Recall_Operations.jpg" alt="Recall" />
         </div>
     </b-col>
+    <b-col col lg="12">
+        <ul>
+            <li class="text-left" v-for="unidade in unidades" v-bind:key="unidade.eFTJUnidadeID">
+                <!-- content -->
+                {{unidade.description}}
+            </li>
+        </ul>
+    </b-col>
 </b-row>
 </template>
 <script>
 import { mapActions, mapState } from 'vuex';
+import { dataService } from '../shared/data.service';
+
+
+var data = {
+    unidades: []
+};
 
 export default {
     name: "Home",
+    data: function() {
+        return data;
+    },
     computed: {
         ...mapState(['userInfo']),
+        
     },
     methods: {
         ...mapActions(['loadUserInfo']),
+        getUnidades: async function() {
+            var result = await dataService.executeQuery({
+                "query": "{unidades {eFTJUnidadeID,description}}"
+            });
+
+            console.log('result unidades', result.unidades);
+            this.unidades = result.unidades;
+        }
     },
     mounted(){
         if( this.userInfo === undefined ) {
             console.log('userInfo', this.userInfo)
             this.$router.push({ path: '/login' })
         }
+        this.getUnidades();
     },
     created() {
          this.loadUserInfo();

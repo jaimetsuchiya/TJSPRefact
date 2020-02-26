@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -53,6 +54,8 @@ namespace TJSPApi.Controllers
             return querySchema;
         }
 
+
+        [EnableCors]
         public async Task<IActionResult> Post([FromBody] GraphQLQuery query)
         {
             var inputs = query.Variables.ToInputs();

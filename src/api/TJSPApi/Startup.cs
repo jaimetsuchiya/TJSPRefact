@@ -37,7 +37,7 @@ namespace TJSPApi
         }
 
         public IConfiguration Configuration { get; }
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        readonly string MyAllowSpecificOrigins = "CorsPolicy";
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -46,11 +46,11 @@ namespace TJSPApi
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.AllowAnyHeader()
+                    builder
+                     .AllowAnyHeader()
                      .AllowAnyMethod()
-                     .WithOrigins(this.Configuration.GetSection("Authentication:Audiences").Get<string[]>())
+                     .WithOrigins(this.Configuration.GetSection("Authentication:Origins").Get<string[]>())
                      .SetIsOriginAllowedToAllowWildcardSubdomains();
-                    builder.WithOrigins().SetIsOriginAllowedToAllowWildcardSubdomains(); 
                 });
             });
 
@@ -59,8 +59,6 @@ namespace TJSPApi
             services.AddSingleton<IConfiguration>(this.Configuration);
 
             var audiences = this.Configuration.GetSection("Authentication:Audiences").Get<string[]>();
-            if (audiences == null)
-                audiences = new string[0];
             var key = Encoding.ASCII.GetBytes(this.Configuration.GetSection("Authentication:SecretKey").Value);
 
             services.AddAuthentication(x =>
@@ -77,7 +75,7 @@ namespace TJSPApi
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = audiences.Any(),
+                    ValidateAudience = true,
                     ValidAudiences = audiences
                 };
             });
@@ -155,23 +153,19 @@ namespace TJSPApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-            //app.UseCors(MyAllowSpecificOrigins);
             app.UseCors(builder =>
             {
                 builder.AllowAnyHeader()
                        .AllowAnyMethod()
-                       .WithOrigins("http://localhost:8080",
-                                    "http://www.contoso.com",
-                                    "https://localhost:44375",
-                                    "https://localhost:8080")
+                       .WithOrigins(this.Configuration.GetSection("Authentication:Origins").Get<string[]>())
                        .SetIsOriginAllowedToAllowWildcardSubdomains();
             });
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireCors("CorsPolicy");
             });
         }
     }
