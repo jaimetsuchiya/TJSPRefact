@@ -1,8 +1,0 @@
-D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Repository.Infrastructure\bin\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.deps.json
-D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Repository.Infrastructure\bin\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.dll
-D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Repository.Infrastructure\bin\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.pdb
-D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Repository.Infrastructure\obj\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.csprojAssemblyReference.cache
-D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Repository.Infrastructure\obj\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.AssemblyInfoInputs.cache
-D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Repository.Infrastructure\obj\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.AssemblyInfo.cs
-D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Repository.Infrastructure\obj\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.dll
-D:\Lab\TJSPRefact\src\InfraStructure\SGDAU.Repository.Infrastructure\obj\Debug\netcoreapp3.1\SGDAU.Repository.Infrastructure.pdb
