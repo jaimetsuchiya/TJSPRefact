@@ -70,6 +70,7 @@ export default {
     },
     methods: {
         ...mapActions(['loadUserInfo']),
+
         getUnidades: async function() {
             var result = await dataService.executeQuery({
                 "query": "{unidades {eFTJUnidadeID,description}}"
@@ -84,7 +85,7 @@ export default {
             console.log('userInfo', this.userInfo)
             this.$router.push({ path: '/login' })
         }
-        this.getUnidades();
+        setTimeout(() => this.getUnidades(), 1000);
     },
     created() {
          this.loadUserInfo();

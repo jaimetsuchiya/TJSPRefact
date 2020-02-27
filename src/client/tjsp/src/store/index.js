@@ -32,6 +32,7 @@ const mutations = {
     },
 
     [SET_USERINFO](state, userInfo) {
+      
         state.userInfo = userInfo.userData;
         state.token = userInfo.token;
 

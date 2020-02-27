@@ -7,7 +7,7 @@ import { API } from './config';
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = `${API}`;
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
-axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem(localStorageToken)}`;
+// axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem(localStorageToken)}`;
 
 const signIn = async function(payload) {
 
@@ -57,7 +57,7 @@ const signIn = async function(payload) {
       };
       const response = await axios.post(`${API}/graphql`, payload, options);
       var queryResult = parseList(response, 200);
-      console.log('queryResult', queryResult);
+      
       return queryResult;
 
     } catch (error) {
